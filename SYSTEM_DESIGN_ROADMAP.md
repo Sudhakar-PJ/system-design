@@ -17,7 +17,11 @@ When teaching the user using this roadmap, all AI models MUST adhere strictly to
   - ❌ **Failure Cases**: Invalid input payloads, 400 Bad Requests, 401 Unauthorized, 404 Not Found, 500 Internal Errors.
   - ⚠️ **Edge Cases**: Empty fields, extreme string lengths, special characters, zero values, boundary limits.
   - 🔄 **Duplicate & Race Condition Cases**: Sending concurrent identical requests to test idempotency keys and locks.
-- 🏗️ **Iterative Ground-Up Project Building**: To make concepts practical, we will build a single, evolving enterprise super-platform (**NexusEngine**) from the ground up, progressively adding new components as we advance through the roadmap. The project integrates 5 core sub-engines + 1 infrastructure layer:
+- 📁 **Repository & Folder Structure Isolation**:
+  - `level_0_starter/`: A dedicated, isolated directory for Level 0 (Mastering Backend Best Practices Starter Project) with its own independent `package.json`, `tsconfig.json`, `src/`, `tests/manual_tests/`, and `node_modules/`.
+  - `nexus_engine/`: The primary enterprise super-platform codebase starting from Level 1 onwards, with its own independent `package.json`, `tsconfig.json`, `src/`, and `node_modules/`.
+  - `.gitignore`: A clean root `.gitignore` ensuring `**/node_modules`, `**/dist`, `**/.env`, and build artifacts across both subprojects are cleanly ignored.
+- 🏗️ **Iterative Ground-Up Project Building**: To make concepts practical, we will build a single, evolving enterprise super-platform (**NexusEngine**) starting from Level 1 inside `nexus_engine/` (after building the Level 0 foundation inside `level_0_starter/`). The project integrates 5 core sub-engines + 1 infrastructure layer:
   - 💰 **1. Trading, Ledger & Payments Engine**: ACID transactions, row locking (`FOR UPDATE SKIP LOCKED`), Redis distributed locks (`Redlock`), idempotency key deduplication, double-entry financial ledger accounting, payment webhooks, and Event Sourcing/CQRS.
   - 📍 **2. Geospatial Mobility & Dispatch Engine**: Real-time GPS location streams over WebSockets/SSE, spatial indexing (Geohashing, Uber H3, QuadTrees), $<10\text{ms}$ proximity lookup, dynamic surge pricing algorithms, and driver-rider state machines.
   - 💬 **3. Real-Time Workspace & Collaboration Engine**: WebSockets, SSE, gRPC, Operational Transformation / CRDTs for multi-user live document co-editing, presence detection ("who's online"), S3 multipart file chunking, and RBAC/ABAC authorization.
