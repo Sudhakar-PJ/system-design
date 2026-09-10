@@ -42,10 +42,10 @@ For every new Topic/Subtopic, the AI MUST follow this 5-step lifecycle:
 
 ## 📊 Dashboard & Active Progress Status
 
-- **Current Status**: 🟡 `Starting Level 0 (Comprehensive Backend Best Practices)`
+- **Current Status**: 🟡 `Starting Level 0 (Mastering Backend Best Practices)`
 - **Active Level**: **Level 0: Production Backend Best Practices Starter Project**
-- **Active Module**: `0.1 Production-Grade Layered Architecture & Dependency Injection`
-- **Overall Completion**: `0% (0 / 140 Subtopics Completed)`
+- **Active Module**: `0.1 Architecture & Project Structure`
+- **Overall Completion**: `0% (0 / 150 Subtopics Completed)`
 - **Last Updated**: `2026-09-10`
 
 ---
@@ -60,7 +60,7 @@ For every new Topic/Subtopic, the AI MUST follow this 5-step lifecycle:
                                                                                                 ▼
  [ Level 7: God Level ] ◄── [ Level 6: AI Systems ] ◄── [ Level 5: FAANG ] ◄── [ Level 4: Enterprise ]
  (Extreme Throughput,        (RAG, Vector DBs, LLM       (Classic Designs,            (Microservices, Mesh,
-  Geo-Distributed)            Inference, Agents)          System Patterns)             Observability, K8s)
+  Geo-Distributed)            Inference, Aggents)         System Patterns)             Observability, K8s)
 ```
 
 ---
@@ -78,7 +78,7 @@ For every new Topic/Subtopic, the AI MUST follow this 5-step lifecycle:
 
 #### 0.2 Error Handling & Resilience
 - [ ] **Centralized Error Architecture**: Custom `AppError` base class, HTTP subclasses (`BadRequestError`, `NotFoundError`, `UnauthorizedError`, `ForbiddenError`, `ConflictError`, `InternalServerError`, `RateLimitError`).
-- [ ] **Async Error Handling & Process Safety**: Express 5 / `express-async-errors`, catching unhandled rejections (`unhandledRejection`) and uncaught exceptions (`uncaughtException`).
+- [ ] **Async Error Handling & Process Safety**: Express 5 / `express-async-errors`, `asyncHandler` wrapper pattern (higher-order wrapper to eliminate repetitive try-catch blocks in Express controllers), catching unhandled rejections (`unhandledRejection`) and uncaught exceptions (`uncaughtException`).
 - [ ] **Operational vs Programmer Errors**: Distinguishing recoverable errors from critical process failures.
 - [ ] **Standardized API Error Envelope**: Implementing RFC 7807 Problem Details and unified JSON error structures `{ success: false, error: { code, message, details, timestamp } }`.
 
@@ -129,6 +129,35 @@ For every new Topic/Subtopic, the AI MUST follow this 5-step lifecycle:
 #### 0.11 Automated Testing Strategy
 - [ ] **Unit Testing**: Testing Services and Controllers in isolation using `Vitest` / `Jest` with mocks.
 - [ ] **Integration Testing**: Testing HTTP endpoints using `Supertest` against a real test database.
+
+#### 0.12 Code Quality, Strict TS & Git Hooks
+- [ ] **Strict TypeScript Rules**: `strict: true`, `noImplicitAny`, `noUnusedLocals`, `exactOptionalPropertyTypes`.
+- [ ] **Automated Code Formatting & Linting**: ESLint + Prettier rules configured for clean code style.
+- [ ] **Git Hooks & Pre-Commit Guards**: `Husky` + `lint-staged` running linting and type-checking automatically before commits.
+
+#### 0.13 Database Soft Deletes & Entity Audit Tracing
+- [ ] **Soft Delete Pattern**: Soft-deletion with `deletedAt` timestamps, indexed queries filtering active records.
+- [ ] **Base Entity Audit Tracing**: Automatically tracking `createdAt`, `updatedAt`, `createdBy`, `updatedBy` fields across all tables.
+
+#### 0.14 Background Task Offloading (In-Process Async Work)
+- [ ] **Non-Blocking Async Execution**: Offloading low-priority non-blocking tasks (e.g. sending welcome email/audit events) using Node.js event emitters or `setImmediate` so main HTTP responses return instantly.
+
+#### 0.15 Automated API Documentation (OpenAPI / Swagger)
+- [ ] **OpenAPI 3.0 / Swagger Setup**: Generating automated interactive Swagger UI at `/docs` using Zod schemas / TypeScript types (`zod-to-openapi`).
+
+#### 0.16 Containerization & Local Dev Setup (Docker & Docker Compose)
+- [ ] **Local Multi-Container Dev Environment**: `docker-compose.yml` orchestrating PostgreSQL, Redis, and App with hot-reloading (`tsx`).
+- [ ] **Production-Grade Dockerfile**: Multi-stage build, non-root user execution, `NODE_ENV=production`, layer caching.
+
+#### 0.17 Third-Party API Integrations & Resiliency Patterns
+- [ ] **Adapter/Wrapper Pattern**: Decoupling 3rd party providers (Twilio for SMS/WhatsApp, SendGrid/Resend for Email, Stripe/Razorpay for Payments) behind abstract interfaces.
+- [ ] **Resilience Mechanics**: Retries with Exponential Backoff + Jitter, Circuit Breaker pattern for 3rd party outages, Provider Failover strategies.
+- [ ] **Inbound Webhook Security**: Verifying cryptographic webhook signatures (HMAC SHA-256) for 3rd party events.
+
+#### 0.18 Scheduled Tasks & Distributed Cron Jobs
+- [ ] **Cron Execution Architecture**: In-process timers (`node-cron`) vs Distributed Queue Schedulers (`BullMQ` repeatable jobs).
+- [ ] **Cluster Execution Locks**: Using Redis distributed locks (`Redlock`) to ensure cron jobs execute exactly once across multi-instance server deployments.
+- [ ] **Cron Idempotency & Monitoring**: Idempotent execution tracking, handling missed execution windows, and job failure alerts.
 
 ---
 
