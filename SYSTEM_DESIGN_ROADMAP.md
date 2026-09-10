@@ -61,6 +61,16 @@ For every new Topic/Subtopic, the AI MUST follow this 6-step lifecycle:
 6. **Step 6: Next Step Confirmation**:
    - Ask the user if they are ready to proceed to the next topic or starter project step.
 
+### 3. Cross-PC Session Handoff Protocol (CRITICAL FOR MULTI-DEVICE LEARNING)
+Whenever the user indicates the session is ending (e.g., *"that's enough for today"*, *"let's stop here"*, *"ending session"*), the current AI instructor **MUST**:
+1. Update the **`## 🔄 AI Handoff & Session Continuation State`** section in `SYSTEM_DESIGN_ROADMAP.md` with:
+   - 📅 **Date & Time of Handoff**
+   - 🏁 **Exact Subtopic & Step Completed** (with list of all files created/modified)
+   - 🎯 **Next Exact Starting Point for the Next AI** (which Level, Module, Subtopic, and Step to pick up from)
+   - 💡 **Context / Notes for the Next AI** (open questions, pending test commands, user preferences)
+2. Provide a clear, detailed natural language summary in the chat so the user can easily read where they left off and copy/paste it or push git changes to their second PC.
+3. Every AI starting a new session MUST first read `SYSTEM_DESIGN_ROADMAP.md` and check the **`## 🔄 AI Handoff & Session Continuation State`** section to seamlessly resume without repeating completed steps.
+
 ---
 
 ## 📊 Dashboard & Active Progress Status
@@ -70,6 +80,44 @@ For every new Topic/Subtopic, the AI MUST follow this 6-step lifecycle:
 - **Active Module**: `0.1 Architecture & Project Structure`
 - **Overall Completion**: `0% (0 / 173 Subtopics Completed)`
 - **Last Updated**: `2026-09-10`
+
+---
+
+## 🔄 AI Handoff & Session Continuation State
+
+> ⚠️ **Attention Next AI Instructor**: READ THIS SECTION FIRST! The user is switching devices and starting the course on this PC. Everything is 100% configured and aligned.
+
+* **Last Updated**: `2026-09-10 21:56`
+* **Session Status**: 🟢 `Fully Configured & Ready for Module 0.1`
+* **Last Completed Subtopic**: `None (Setup & Roadmap Alignment Completed)`
+* **Current Active Level**: **Level 0: Production Backend Best Practices Starter Project**
+* **Current Active Module**: `0.1 Architecture & Project Structure`
+* **Current Step Lifecycle**: `Step 1: Pre-Topic Discussion`
+* **Files Created/Modified In Setup Session**:
+  * [SYSTEM_DESIGN_ROADMAP.md](file:///mnt/recovery/system-design/SYSTEM_DESIGN_ROADMAP.md) (Fully customized with subtopics, 6-step lifecycle, test script rules, subproject folder structure, and handoff state)
+
+---
+
+### 🎯 Instructions for the Next AI Instructor (Second PC):
+
+1. **Where to Start Immediately**:
+   * Initiate **Step 1: Pre-Topic Discussion** for **Module 0.1 Architecture & Project Structure**.
+   * Discuss the 3 subtopics of Module 0.1:
+     1. **Clean Layered Architecture** (`Config` $\rightarrow$ `Routes` $\rightarrow$ `Controllers` $\rightarrow$ `Services` $\rightarrow$ `Repositories` $\rightarrow$ `Database/ORM`)
+     2. **Dependency Injection (DI) & Inversion of Control (IoC)** (Constructor DI vs Container-based DI)
+     3. **Interface-Driven Design** (Strict Repository & Service Contracts)
+   * Explain real-world importance and how it forms the foundation of `level_0_starter/`.
+   * Ask the user if they have any custom additions/questions for Module 0.1 before waiting for their confirmation to move to Step 2.
+
+2. **Mandatory Operating Rules & Preferences**:
+   * 🛑 **NO Automatic Code Writing**: Do NOT write code files or run bash commands directly unless requested.
+   * 💬 **Chat File-by-File Delivery**: Deliver all code snippets, folder structures, and instructions directly in chat, **one file at a time**.
+   * 📁 **Folder Isolation**:
+     * Level 0 code lives in `level_0_starter/` (standalone `package.json`, `tsconfig.json`, `src/`, `tests/manual_tests/`, `node_modules/`).
+     * Level 1+ code lives in `nexus_engine/`.
+   * 🏗️ **Master Project**: **NexusEngine** (Trading, Mobility, Workspace, Media Transcoding, AI RAG/Agent engines).
+   * 🧪 **Step 4 Test Execution**: Create standalone test scripts named `tests/manual_tests/0.1_architecture.test.ts` (with subtopic numbers) testing Success, Failure, Edge cases, and Duplicates/Concurrency. Provide the exact command (`npx tsx tests/manual_tests/0.1_architecture.test.ts`) in chat for the **user to execute in their console**.
+   * 🔄 **End of Session**: Whenever the user says *"enough for today"*, update this `## 🔄 AI Handoff & Session Continuation State` section before closing.
 
 ---
 
