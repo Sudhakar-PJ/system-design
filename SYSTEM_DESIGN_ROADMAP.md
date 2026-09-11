@@ -18,6 +18,7 @@ When teaching the user using this roadmap, all AI models MUST adhere strictly to
   - ⚠️ **Edge Cases**: Empty fields, extreme string lengths, special characters, zero values, boundary limits.
   - 🔄 **Duplicate & Race Condition Cases**: Sending concurrent identical requests to test idempotency keys and locks.
 - 💰 **100% Free & Open-Source Stack (Zero Spend Guarantee)**: All tools, databases, infrastructure, and AI models taught and built in this roadmap MUST be 100% free, open-source, and self-hostable locally via Docker / LocalStack. For AI/LLM inference on older/low-spec PCs without local GPUs, we use 100% free cloud tiers (Google Gemini Free API, Groq Free Llama 3 API, HuggingFace Serverless), lightweight CPU-based ONNX embeddings (`@xenova/transformers` taking <30MB RAM), or zero-overhead Mock Providers. Never suggest paid subscriptions or paid cloud tiers.
+- 🛠️ **Hardware Realism & Linux Probes (Overcoming Node.js V8 Limits)**: For low-level hardware & OS subtopics (e.g. NUMA, page cache, `O_DIRECT`, `io_uring`, cache line false sharing, SIMD), Node.js alone abstracts away hardware. The AI MUST pair TypeScript code with direct Linux CLI diagnostics (`numactl`, `perf stat`, `strace`, `dd iflag=direct`, `vmstat 1`, `vmtouch`, `autocannon`) or small standalone C/Rust probe snippets so the user can observe true OS and hardware behavior in their terminal.
 - 📁 **Repository & Folder Structure Isolation**:
   - `level_0_starter/`: A dedicated, isolated directory for Level 0 (Mastering Backend Best Practices Starter Project) with its own independent `package.json`, `tsconfig.json`, `src/`, `tests/manual_tests/`, and `node_modules/`.
   - `nexus_engine/`: The primary enterprise super-platform codebase starting from Level 1 onwards, with its own independent `package.json`, `tsconfig.json`, `src/`, and `node_modules/`.
@@ -143,6 +144,9 @@ Whenever the user indicates the session is ending (e.g., *"that's enough for tod
      * Level 1+ code lives in `nexus_engine/`.
    * 🏗️ **Master Project**: **NexusEngine** (Trading, Mobility, Workspace, Media Transcoding, AI RAG/Agent engines).
    * 🧪 **Step 4 Test Execution**: Create standalone test scripts named `tests/manual_tests/0.0.1_os_primitives.test.ts` (with subtopic numbers) testing Success, Failure, Edge cases, and Duplicates/Concurrency. Provide the exact command (`npx tsx tests/manual_tests/0.0.1_os_primitives.test.ts`) in chat for the **user to execute in their console**.
+   * 🛠️ **Hardware Realism & Linux Probes**: Pair Node.js scripts for low-level OS topics (0.0.1, 0.1.2, 4.5.1) with direct Linux CLI tools (`numactl`, `perf stat`, `strace`, `dd iflag=direct`, `vmstat 1`, `vmtouch`) or small C/Rust probes so the user can observe true hardware behavior.
+   * 📊 **Raw SQL & Execution Plans**: Prioritize raw SQL query plans (`EXPLAIN (ANALYZE, BUFFERS)`), raw index scans, and cursor management over ORM abstractions in Section 0.2.8.
+   * ⚡ **Streaming Trade-offs**: Benchmark Kafka partition Head-of-Line (HoL) blocking vs BullMQ/RabbitMQ competing consumer acknowledgment patterns in manual tests.
    * 💰 **Zero-Spend & Low-Spec PC Guarantee**: ALWAYS use 100% free open-source tools. For AI/LLM topics, use free cloud API tiers (Gemini Free, Groq Free Llama 3) or lightweight CPU ONNX embeddings (`@xenova/transformers`). Zero local GPU required, zero spend!
    * 🔄 **End of Session**: Whenever the user says *"enough for today"*, update this `## 🔄 AI Handoff & Session Continuation State` section before closing.
 
