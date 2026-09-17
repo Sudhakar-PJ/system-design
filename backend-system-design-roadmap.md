@@ -74,6 +74,8 @@ _Project Repo: `production-service-core` (Stage 1: Architecture Scaffold)_
 - `[CORE]` Interface-driven design for repositories/services (swappable storage engines)
 - `[CORE]` Architecture Decision Records (ADR) — how to document a design decision properly
 
+### 0A.2 Error Handling & Resilience
+
 - `[CORE]` Centralized Error Architecture — `AppError` base class + typed subclasses (`BadRequestError`, `NotFoundError`, `ConflictError`, etc.)
 - `[CORE]` Error Classification Taxonomy — Categorizing Client (4xx) vs Server (5xx) vs Upstream Integration vs Unknown Uncaught errors
 - `[CORE]` Stable Error Codes & Domain Identifiers — Machine-readable error codes (e.g., `AUTH_INVALID_TOKEN`, `PAYMENT_CARD_DECLINED`) for programmatic client handling, monitoring, and SLA tracking
@@ -91,6 +93,8 @@ _Project Repo: `production-service-core` (Stage 1: Architecture Scaffold)_
 - `[CORE]` Granular PII Redaction Policy — Explicit PII classification rules per field (passwords, JWTs, credit card numbers, SSNs, IP addresses, emails) with Pino serializer redaction paths
 - `[CORE]` `AsyncLocalStorage` for Request-Scoped Context Propagation — Automatic correlation ID and tenant context propagation across asynchronous call chains without parameter drilling
 - `[CORE]` Request/Response Audit Logging Middleware — Redacted request/response payloads, status codes, and execution duration logging
+
+### 0A.4 Configuration & Environment Management
 
 - `[CORE]` Type-Safe Environment Validation (Zod) — Fail-fast schema validation on service startup for required configuration parameters
 - `[CORE]` Layered Configuration Hierarchy & Overrides — Multi-tier configuration resolution precedence (`base defaults` $\rightarrow$ `environment-specific overrides` $\rightarrow$ `runtime secret overrides`)
