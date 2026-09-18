@@ -4,7 +4,7 @@
 
 **Legend**: `[MUST-KNOW]` mandatory core hands-on build · `[SHOULD-KNOW]` senior production engineering standards · `[EXPERT]` conceptual literacy & high-scale awareness (no build required unless annotated `[EXPERT · buildable]`) · `[NOTE]` informational pointer; indicates a topic deferred to a later level.
 
-**How we'll actually work through this**: for each subtopic, I explain it in full depth — what/why/how/failure modes — with code in the layer it belongs to (`routes → controllers → services → repository → config`), plus diagrams/flowcharts where they help, and I generate a dedicated course-material file for that subtopic. No forced quizzes, no interview-Q&A files. You confirm understanding in your own words before we move on, at your pace.
+**How we'll actually work through this**: for each subtopic, I explain it in full depth — what/why/how/failure modes — with code in the layer it belongs to (`routes → controllers → services → repository → config`), plus diagrams/flowcharts where they help, and I generate a dedicated course-material file for that subtopic. No forced quizzes, no interview-Q&A files. Every subtopic ends with a Learner Confirmation (1-sentence restatement + 1 place you'd use it in your current project) before we move on, at your pace.
 
 **Stack**: Node.js + TypeScript + Express as the constant. Every other tool (Postgres, MongoDB, Redis, Kafka, etc.) is chosen per-project based on what best teaches that project's concept — 100% free/open-source/self-hostable via Docker, no paid services required anywhere in this roadmap.
 
@@ -20,12 +20,15 @@
     4. **TypeScript Syntax & Design Callout** (explaining specific TS features, generics, types, or interfaces used).
   - **Mode B: Conceptual & Explanation-Heavy Mode** (when covering engine internals, theory, or system design trade-offs): AI instructors are explicitly authorized and expected to provide long, comprehensive, in-depth explanations with execution flowcharts, diagrams, step-by-step traces, failure modes, and code snippets where applicable. Rushing or artificially truncating complex topics is prohibited.
 - **Course-material files, not quizzes or interview files** — every subtopic gets a dedicated, detailed course-material file (theory, code, diagrams/flowcharts). No forced active-recall quizzes, no separate interview-prep Q&A files.
+- **Session Resume Protocol** — On the first message of any new session, the AI reads **📌 Current State**, restates: *"Last time we finished [X] and next is [Y]. Ready?"*, and waits for confirmation before proceeding.
+- **Learner Confirmation Bar** — Every subtopic across all modes (Mode A Code Implementation & Mode B Conceptual) ends with a mandatory Learner Confirmation before moving on. Confirmation of understanding must include: (1) a one-sentence restatement of the concept, and (2) one place the learner would use it in their current project. This ensures active synthesis rather than passive agreement.
+- **Stuck Protocol (Handling "I don't understand")** — When a learner says "I don't understand X," the AI: (1) re-explains using a different analogy or concrete code example, (2) offers a smaller scope option (*"do you want just the minimum to move on, or the full depth?"*), and (3) logs the topic as "revisit" in Session Notes if the learner opts to move forward. Revisited topics are re-approached at the next level that uses them.
 - **Prerequisite / cross-reference tags** — recurring concepts (consistent hashing, Raft, Bloom filters, rate limiting, etc.) carry `[Prerequisites: ...]` / `[See Also: ...]` tags so later topics build on earlier ones instead of re-explaining from scratch.
 - **Proactive Case Study & Systems Paper Triggers (Module A & B)** — Whenever a subtopic is reached or completed (e.g., Level 0C.5 API Versioning), the AI instructor will automatically check Module A (Case Studies) and Module B (Seminal Papers) for any cross-referenced items (e.g., *Stripe's Date-Based API Versioning Case Study*) and explicitly prompt you: *"We've just reached/completed Level 0C.5! This unlocks [Case Study/Paper Name]. Would you like to dive into its engineering breakdown/digest right now, or keep moving forward on the core roadmap path?"*
-- **Level 7 Awareness Protocol** — AI writes one concise, high-impact conceptual explanation per subtopic (what it is, why it exists, where it's used in production at scale), and you confirm understanding by restating it in your own words before we move on.
+- **Level 7 Awareness Protocol** — AI writes one concise, high-impact conceptual explanation per subtopic (what it is, why it exists, where it's used in production at scale), and you confirm understanding by restating it in your own words (following the **Learner Confirmation Bar**) before we move on.
 - **Open-Source Code Dissection Drills** — Beyond writing our own code, we actively inspect and explain real production open-source modules (e.g. BullMQ Redis Lua scripts, Express router stack, Debezium CDC connectors, Envoy rate-limit filters) to master reading unfamiliar high-grade codebases.
 - **Mock Staff Architect Design Defense & Capstone Protocol** — At major system design milestones (Level 4 Unified Platform and every Level 5 MAANG Capstone), you independently sketch your architecture on paper/Excalidraw at your own pace (no timer/pressure). You then present your design, and the AI acts as a FAANG Staff Engineer / Principal Architect, grilling your design on single points of failure (SPOFs), scalability spikes (10x/100x), edge cases, and trade-offs before revealing the reference solution and conducting a Gap Analysis.
-- **Living Error Journal & Bug Post-Mortems** — Any bug, race condition, unexpected exception, memory leak, or architectural flaw encountered during building or load-testing is logged into our **Session Error Journal** at the bottom with its symptom, root cause, and key system design takeaway.
+- **Living Error Journal & Drill Failure Diagnostic Protocol** — When a drill or build fails, the first action is to enter diagnostic mode: isolate the failure, form a hypothesis, test it, and categorize the root cause as (a) a bug in our code, (b) an environment/config issue, or (c) a genuine learning gap. Log (a) and (c) into our **Session Error Journal** at the bottom with its symptom, root cause, and key system design takeaway; skip (b) unless it recurs.
 - **Progressive TypeScript Mastery & TS Callouts** — Production TypeScript patterns (Generics, Discriminated Unions, Zod schema inference, Utility Types `Omit`/`Pick`/`Partial`) are introduced progressively in context as we build. Every code delivery includes a concise **"TS Syntax & Design Callout"** explaining why specific TypeScript constructs were chosen.
 - **Production Portfolio README Artifact** — At the completion of every project (Level 0A through Level 4), we generate a production-grade `README.md` complete with C4 Container diagrams, benchmark load-test results, core architectural trade-offs, and a Staff-level *"What I would do differently at 10x scale"* section.
 - **Level Architecture Retrospective & Lessons Learned** — At the conclusion of every level, we write a concise **Level Retrospective** artifact summarizing key trade-offs mastered, anti-patterns avoided, and personal engineering cheat-sheets to compound learning alongside the Error Journal.
@@ -218,6 +221,7 @@ _Project Repo: `production-service-core` (Stage 3: Data Correctness & API Engine
 ### 0C.4 Deep HTTP Semantics & Protocol Controls
 
 - `[MUST-KNOW]` Status Code Taxonomy & Discipline — 400 Bad Request vs 422 Unprocessable Entity vs 409 Conflict vs 412 Precondition Failed, 401 Unauthorized vs 403 Forbidden, 402 Payment Required, 405 Method Not Allowed
+- `[MUST-KNOW]` Reading & Implementing IETF RFC Specifications — Navigating IETF RFC structures (MUST/SHOULD/MAY RFC 2119 keywords), extracting normative requirements directly from official specs (RFC 7807 Problem Details, RFC 8594 Sunset, RFC 9745 Deprecation, RFC 7239 Forwarded header) without relying on secondary summary blog posts
 - `[MUST-KNOW]` HTTP Layer Optimistic Concurrency & Conditional Requests — `If-Match`, `If-None-Match`, `If-Unmodified-Since`, `If-Modified-Since`, ETag validation
 - `[SHOULD-KNOW]` Range Requests & Large Media Streams — `Range`, `Content-Range`, `206 Partial Content` (video streaming, large chunk downloads)
 - `[MUST-KNOW]` Redirect Semantics & Method Preservation — 301 Moved Permanently vs 302 Found vs 307 Temporary Redirect vs 308 Permanent Redirect (method preservation rules)
@@ -234,6 +238,7 @@ _Project Repo: `production-service-core` (Stage 3: Data Correctness & API Engine
 - `[SHOULD-KNOW]` Versioning Failure Modes & Anti-Patterns — Version explosion, version freeze, silent breaking changes, ghost un-deletable versions, consumer lock-in, and over-versioning
 - `[EXPERT]` Spec, SDK & Tooling Integration — Multi-version OpenAPI/Swagger specs, `openapi-diff` breaking change detection in CI, API contract style guide enforcement (Spectral / Vacuum CLI linting for API naming & response envelope consistency), versioned client SDK generation, and per-version Pact contract testing
 
+📜 **`[RFC-SPEC DRILL 0C.4]`**: Read RFC 7807 (*Problem Details for HTTP APIs*) directly from the official IETF specification (not a summary). Implement compliant `application/problem+json` error responses directly from the spec. Then read RFC 8594 (*Sunset Header Field*) and RFC 9745 (*Deprecation Header Field*) directly from IETF specs, and add compliant `Deprecation` and `Sunset` headers to your v1 API endpoints.
 🧪 **`[DRILL 0C]`**: Build a v1 $\rightarrow$ v2 migration in `production-service-core`. Implement expand-contract DB schema evolution, money rounding precision tests, `Deprecation`/`Sunset` headers, ETag validation (`If-Match`), and version usage tracking before returning a `410 Gone` after sunset.
 🔎 **`[DISSECTION 0C]`**: Inspect PostgreSQL query logs (`pg_stat_activity` & lock graph) during competing pessimistic `SELECT FOR UPDATE` transaction locks.
 
@@ -597,6 +602,17 @@ Client Request ───▶ [Edge: Cloudflare WAF] ───▶ [Gateway: Envoy 
 
 - `[SHOULD-KNOW]` Production Canary Testing & Probes — Automated smoke tests against canary instances, synthetic endpoint monitoring probes (Grafana Synthetic / Checkly), dark launches (routing production traffic to new code paths without user impact), shadow traffic duplication (mirroring live production requests to new versions), and controlled production chaos testing (isolated blast radius & kill switches)
 
+### 4.5 When Not To Reach For It: A Staff Engineer's Restraint Checklist [EXPLANATION-HEAVY]
+
+- `[MUST-KNOW]` **When NOT to Use Microservices** — Why modular monoliths (single deployable, strict domain boundaries) are superior for early/mid-stage products; operational overhead of distributed tracing, network boundaries, independent deployment pipelines, and multi-service Saga transaction complexity vs in-process DB transactions.
+- `[MUST-KNOW]` **When NOT to Use Kafka / Complex Event Streams** — When SQS, RabbitMQ, BullMQ/Redis Streams, or PostgreSQL transactional outbox are sufficient; operational burden of ZooKeeper/KRaft cluster management, partition rebalancing stalls, log retention disk management, and partition key hot-spots.
+- `[MUST-KNOW]` **When NOT to Use Distributed Caching (Redis/Memcached)** — When in-process L1 local cache (`lru-cache`, Guava) or HTTP response headers (`Cache-Control`, CDN) are sufficient; invalidation synchronization race conditions, network hop latency, serialization CPU overhead, and Redis cluster memory cost.
+- `[MUST-KNOW]` **When NOT to Use Asynchronous Event-Driven Architectures** — When synchronous HTTP/gRPC API calls are simpler, easier to debug, and provide immediate client response feedback; eventual consistency anomalies, out-of-order execution bugs, DLQ processing debt, and distributed call-chain tracing complexity.
+- `[MUST-KNOW]` **When NOT to Database-Shard** — When vertical instance scaling (larger NVMe DB node), read-replicas, partitioning, or tactical denormalization suffice; cross-shard joins, distributed re-sharding migrations, loss of ACID multi-row transactions, and global unique ID generation complexity.
+- `[MUST-KNOW]` **When NOT to Add a CDN / Edge Infrastructure** — When static assets are small/infrequently accessed or served directly behind an Nginx/Envoy reverse proxy; origin shielding overhead, cache key invalidation complexity, purge latency, and edge bandwidth cost trade-offs.
+- `[MUST-KNOW]` **When NOT to Use GraphQL** — When REST endpoints with Zod/OpenAPI contracts or gRPC suffice; N+1 query vulnerability, loss of native HTTP response caching, gateway query parser CPU overhead, and GraphQL Schema Federation operational complexity.
+- `[MUST-KNOW]` **When NOT to Use NoSQL / Document Stores** — When data requires relational integrity, multi-entity transactions, or ad-hoc analytics; document duplication debt, schema-less application runtime bug accumulation, and client-side join performance penalties.
+
 🏛️ **`[DEFENSE 4]`**: You present your Unified Production Platform architecture (wiring Production Service Core 0B + 0C + 0D + Product Catalog 2 + Order Processing 3A, with optional Real-Time Chat 3B stretch goal, behind Envoy Gateway with OpenTelemetry, K8s, and Canary rollouts). The AI conducts a formal 30-minute Staff Architect Mock Interview, grilling your design on: 10x/100x traffic spikes, multi-region failover, gateway throughput bottlenecks, database connection pool exhaustion, and cascading failure isolation.
 🔎 **`[DISSECTION 4]`**: Inspect Envoy Proxy's rate-limiting filter definitions (`ratelimit.proto` & Envoy rate-limit service) — explain gRPC interface design for high-throughput edge filters.
 
@@ -810,6 +826,12 @@ _Mapped directly to roadmap levels for active reinforcement during topics. Each 
 
 - **Discord's migration from Cassandra to ScyllaDB** `[Reinforces Level 2.2 NoSQL & Level 3A.2 Database Scaling]`
 - **Instagram's Postgres sharding strategy** `[Reinforces Level 1.2 SQL & Level 3A.2 Database Scaling]`
+- **GitHub's zero-downtime MySQL → Vitess sharding migration** `[Reinforces Level 3A.2 Database Scaling & Sharding]`
+- **Shopify's Pods architecture (scaling the monolith via cells)** `[Reinforces Level 4.1 Microservices, Level 4.5 Staff Restraint & Level 6.2 Cell Architecture]`
+- **Amazon Prime Video's microservices → monolith reversal** `[Reinforces Level 4.1 Microservices & Level 4.5 Staff Restraint]`
+- **Segment's famous $1M Kafka incident postmortem** `[Reinforces Level 3A.3 Event Streams, Level 3A.5 Webhooks & Level 4.5 Staff Restraint]`
+- **Cloudflare's postmortem culture & global outage RCAs** `[Reinforces Level 4.2 SRE & Level 4.1 Gateway Edge]`
+- **Reddit's queue architecture & early scaling post-mortems** `[Reinforces Level 3A.3 Messaging & Event Streams]`
 - **Stripe's ledger and idempotency-key architecture** `[Reinforces Level 0B.3 Idempotency & Level 5.5 Ledger]`
 - **Stripe's date-based API versioning and per-request transformation layer** `[Reinforces Level 0C.5 API Versioning Engine & Level 4.1 Gateway Routing]`
 - **Uber's H3 geospatial indexing and dispatch system evolution** `[Reinforces Level 3B.2 Real-Time Spatial & Level 5.4 Uber]`
@@ -827,18 +849,42 @@ _Mapped directly to roadmap levels for active reinforcement during topics. Each 
 
 ## 📄 Module B — Seminal Systems Papers [EXPLANATION-HEAVY]
 
-_Classic systems papers mapped directly to roadmap levels. Annotated with estimated reading time budgets and depth targets (Abstract & Architecture only vs Full Deep Read)._
+_Classic systems papers mapped directly to roadmap levels. Mapped with estimated reading time budgets, depth targets, and "why this matters today" relevance annotations._
 
+- **Lamport's Time, Clocks, and the Ordering of Events (Lamport, 1978)** `[Reinforces Level 3A.4 & Level 6.6]` — *Time Budget: 45 mins | Target: Full Deep Read* (Logical clocks, partial ordering, total ordering state machines).
+  💡 *Why this matters today: Foundation of all distributed event sequencing, hybrid logical clocks (HLC), and multi-datacenter event ordering.*
+- **Sagas (Garcia-Molina & Salem, 1987)** `[Reinforces Level 3A.3 Event Architecture]` — *Time Budget: 45 mins | Target: Abstract & Architecture Only* (Long-lived transactions split into compensating step pairs).
+  💡 *Why this matters today: The blueprint for modern microservice distributed transactions and eventual consistency without 2PC.*
+- **Paxos Made Simple (Lamport, 2001)** `[Reinforces Level 3A.4 Consensus]` — *Time Budget: 60 mins | Target: Full Deep Read* (Proposer/Acceptor/Learner phases, consensus invariant proofs).
+  💡 *Why this matters today: The bedrock consensus protocol underpinning Spanner, Chubby, Cassandra, and distributed state machines.*
+- **Chord: A Scalable Peer-to-peer Lookup Service (Stoica et al., 2001)** `[Reinforces Level 3A.1 Scalability & Sharding]` — *Time Budget: 45 mins | Target: Abstract & Architecture Only* (Distributed Hash Tables (DHT), finger tables, consistent hashing keyspace routing).
+  💡 *Why this matters today: The precursor to modern database sharding, Dynamo node placement, and distributed cache ring routing.*
+- **Google GFS Paper (Ghemawat et al., 2003)** `[Reinforces Level 2.4 Object/File Storage]` — *Time Budget: 45 mins | Target: Abstract & Architecture Only* (Single master bottleneck trade-offs, 64MB chunking, append-only record streams).
+  💡 *Why this matters today: Inspired HDFS, S3 architectures, and modern blob storage engines.*
 - **Google MapReduce Paper (Dean & Ghemawat, 2004)** `[Reinforces Level 2.4 Data Pipelines]` — *Time Budget: 45 mins | Target: Abstract & Architecture Only* (Map vs Reduce phase split, worker fault tolerance, data locality optimization).
+  💡 *Why this matters today: Launched modern big data processing (Hadoop, Spark, Flink).*
 - **Google Bigtable Paper (Chang et al., 2006)** `[Reinforces Level 2.2 Wide-Column Stores]` — *Time Budget: 60 mins | Target: Abstract & Architecture Only* (SSTable/LSM-tree mechanics, GFS dependency, sparse multidimensional sorted map).
+  💡 *Why this matters today: Underpins Cassandra, HBase, RocksDB, and high-throughput write-heavy storage engines.*
 - **Amazon Dynamo Paper (DeCandia et al., 2007)** `[Reinforces Level 2.2 KV Stores & Level 3A.2 Sharding]` — *Time Budget: 90 mins | Target: Full Deep Read* (Consistent hashing, vector clocks, quorum reads/writes `N+R>W`, sloppy quorums & hinted handoff).
-- **Apache Kafka Paper (Kreps et al., 2011)** `[Reinforces Level 3A.3 Event Streams]` — *Time Budget: 60 mins | Target: Full Deep Read* (Distributed commit log, zero-copy `sendfile` I/O, partition consumer scaling).
+  💡 *Why this matters today: The foundational paper for eventual consistency, AP system design, DynamoDB, and ScyllaDB.*
+- **Google Dapper Paper (Sigelman et al., 2010)** `[Reinforces Level 0A.3 Trace Correlation & Level 4.2 SRE]` — *Time Budget: 45 mins | Target: Abstract & Architecture Only* (Trace context propagation, span IDs, low-overhead out-of-band trace sampling).
+  💡 *Why this matters today: The exact blueprint for OpenTelemetry, Jaeger, Zipkin, and microservice distributed tracing.*
+- **Google Dremel Paper (Melnik et al., 2010)** `[Reinforces Level 2.2 Columnar OLAP]` — *Time Budget: 45 mins | Target: Abstract & Architecture Only* (Columnar nested storage representation, multi-level execution trees, in-situ record shredding/assembly).
+  💡 *Why this matters today: The origin of Apache Parquet, Apache ORC, BigQuery, and modern analytical database execution engines.*
 - **Apache ZooKeeper Paper (Hunt et al., 2010)** `[Reinforces Level 3A.4 Distributed Coordination]` — *Time Budget: 60 mins | Target: Full Deep Read* (ZAB atomic broadcast protocol, hierarchical z-node tree, linearizable writes & watch triggers).
-- **Raft Consensus Paper (Ongaro & Ousterhout, 2014)** `[Reinforces Level 3A.4 Consensus]` — *Time Budget: 120 mins | Target: Full Deep Read* (Leader election, log replication, safety invariants, joint consensus membership changes).
-- **Google Spanner Paper (Corbett et al., 2012)** `[Reinforces Level 3A.4 Consistency & Level 5 Capstones]` — *Time Budget: 90 mins | Target: Full Deep Read* (TrueTime API, Paxos state machines, external consistency guarantees).
-- **Amazon Aurora Paper (Verbitski et al., 2017)** `[Reinforces Level 1.2 & Level 2.1 RDBMS Internals]` — *Time Budget: 60 mins | Target: Full Deep Read* (Log is the database, decoupled compute & storage, asynchronous quorum writes across 6 storage nodes).
-- **Google GFS Paper (Ghemawat et al., 2003)** `[Reinforces Level 2.3 Object/File Storage]` — *Time Budget: 45 mins | Target: Abstract & Architecture Only* (Single master bottleneck tradeoffs, chunksize selection, record append semantics).
+  💡 *Why this matters today: Teaches distributed locking, leader election, and config coordination used in early Kafka and Hadoop.*
+- **Apache Kafka Paper (Kreps et al., 2011)** `[Reinforces Level 3A.3 Event Streams]` — *Time Budget: 60 mins | Target: Full Deep Read* (Distributed commit log, zero-copy `sendfile` I/O, partition consumer scaling).
+  💡 *Why this matters today: Shifted industry paradigms from transient message queues (RabbitMQ/SQS) to durable event log streaming.*
+- **Google Spanner Paper (Corbett et al., 2012)** `[Reinforces Level 3A.4 Consistency & Level 5 Capstones]` — *Time Budget: 90 mins | Target: Full Deep Read* (TrueTime API with GPS/atomic clocks, Paxos state machines, external consistency guarantees).
+  💡 *Why this matters today: Proved globally distributed ACID transactions across regions are possible at scale (CockroachDB/Yugabyte).*
+- **Jay Kreps' The Log Manifesto (Kreps, 2013)** `[Reinforces Level 3A.3 Event Streams & CDC]` — *Time Budget: 45 mins | Target: Full Deep Read* (Log as central source of truth, CDC event sourcing, stream-table duality).
+  💡 *Why this matters today: The most influential blog/paper defining modern Event-Driven Architecture, Debezium CDC, and Event Sourcing.*
 - **Facebook TAO Paper (Bronson et al., 2013)** `[Reinforces Level 1.5 Caching & Level 2.2 Graph Stores]` — *Time Budget: 60 mins | Target: Full Deep Read* (Distributed social graph read-through cache, write-through invalidation, regional leader/follower tiers).
+  💡 *Why this matters today: Demonstrates how to build multi-region read-heavy graph caching systems at petabyte scale.*
+- **Raft Consensus Paper (Ongaro & Ousterhout, 2014)** `[Reinforces Level 3A.4 Consensus]` — *Time Budget: 120 mins | Target: Full Deep Read* (Leader election, log replication, safety invariants, joint consensus membership changes).
+  💡 *Why this matters today: Replaced Paxos as the understandable consensus algorithm powering etcd, Kubernetes, Vitess, and Consul.*
+- **Amazon Aurora Paper (Verbitski et al., 2017)** `[Reinforces Level 1.2 & Level 2.1 RDBMS Internals]` — *Time Budget: 60 mins | Target: Full Deep Read* (Log is the database, decoupled compute & storage, asynchronous quorum writes across 6 storage nodes).
+  💡 *Why this matters today: Defined modern cloud-native database design by decoupling compute nodes from log-structured storage.*
 
 ---
 
@@ -855,7 +901,7 @@ _Not part of the core path — pull from here only if/when you want to go a leve
 
 ### 🛠️ Living Error Journal (Bugs Encountered & Root-Caused)
 
-_Whenever we hit a runtime bug, race condition, or memory leak during building or drills, we log it here with its root cause and key engineering takeaway._
+_Whenever a drill or build fails, we enter diagnostic mode (isolate failure $\rightarrow$ form hypothesis $\rightarrow$ test hypothesis) and categorize the root cause: (a) code bug, (b) environment/config issue, or (c) learning gap. We log (a) and (c) here with their symptom, root cause, and key system design takeaway; (b) is skipped unless it recurs._
 
 | #            | Subtopic / Drill | Symptom / Bug Encountered | Underlying Root Cause | Key System Design Takeaway |
 | ------------ | ---------------- | ------------------------- | --------------------- | -------------------------- |
