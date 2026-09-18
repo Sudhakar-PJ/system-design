@@ -59,8 +59,7 @@ Instead of one giant master project, each project below is scoped to teach a spe
 | **0A, 0B, 0C & 0D** | **Production Service Core**<br>*(Single Hardened Repo)* | **Stage 0A**: Clean layered architecture, typed error handling, Pino logging, Zod validation<br>**Stage 0B**: Auth (JWT/Argon2id), OTP, MFA, RBAC/ABAC, Helmet, CORS, Rate Limiting, Idempotency<br>**Stage 0C**: SQL internals, isolation levels, transactions, pool tuning, PgBouncer, migrations, money precision, i18n/l10n, versioning<br>**Stage 0D**: Testcontainers, MSW, TCP/TLS/DNS/HTTP2-3, graceful shutdown, profiling, cron | **Full Production-Hardened REST API**<br>• *Stage 0A*: Core architecture & logging (No Auth/Locks)<br>• *Stage 0B*: Auth & Security Hardening<br>• *Stage 0C*: Data Correctness & SQL Foundations<br>• *Stage 0D*: Ops, Protocols & Test Suite Release |
 | **1** | **URL Shortener** | Caching patterns, cache stampede/penetration, Base62 encoding, hot-key handling | **Shorten + redirect + Redis cache + analytics endpoint**<br>❌ *No auth* |
 | **2** | **Product Catalog / Search** | Indexing strategy, full-text/inverted index search, CDC sync pipeline, pagination at scale, GraphQL & DataLoader batching | **CRUD + REST/GraphQL search + pagination + Postgres/Elasticsearch CDC sync**<br>❌ *No auth* |
-| **3A** | **Order Processing Service** | Event-driven architecture, Outbox pattern, Saga orchestration, Kafka queues | **Checkout $\rightarrow$ Outbox $\rightarrow$ Kafka $\rightarrow$ Saga $\rightarrow$ Compensation**<br>❌ *No UI (100% backend/event-driven)* |
-| **3B** | **Real-Time Location & Chat** | WebSockets at scale, Pub/Sub fan-out, presence tracking, geo-indexing (H3/Geohash) | **WebSocket Gateway + presence tracking + Geo dispatch**<br>❌ *No message history UI* |
+| **3A, 3B & 3C** | **Order Processing & Real-Time Gateway** | **Stage 3A**: Event-driven architecture, Outbox pattern, Saga orchestration, Kafka queues<br>**Stage 3B**: WebSockets at scale, Pub/Sub fan-out, presence tracking, geo-indexing (H3/Geohash)<br>**Stage 3C**: Staff architecture diagramming & presentation workshop | **Checkout $\rightarrow$ Outbox $\rightarrow$ Kafka $\rightarrow$ Saga** (3A)<br>**WebSocket Gateway + Geo dispatch** (3B)<br>**C4 Topology & Staff Presentation Workshop** (3C) |
 | **4** | **Unified Production Platform** | Wiring 1–3B behind API gateway, OpenTelemetry, Grafana observability, K8s, Canary rollouts | **Wire Services 1–3B behind Envoy Gateway + Observability + Runbook** |
 | **5** | **MAANG Capstone System Designs** | High-scale architecture, 6-Stage Blueprint, capacity math, deep dives, failure modes | 📝 **Design-Only (Untimed Paper Drills & Mock Defenses)**<br>❌ *No production code build* |
 | **6** | **Extreme Distributed Systems** | Low-latency DPDK/eBPF, active-active Spanner/Paxos, cell architecture, Wasm | 📖 **Awareness Protocol Only**<br>❌ *No hands-on build required* |
@@ -149,7 +148,17 @@ _Project Repo: `production-service-core` (Stage 2: Security, Auth & Idempotency 
 > 📦 **Level 0B Build Scope & Deliverables**:
 > - **Deliverable**: `production-service-core` **Stage 2 (Auth & Request Hardening)**.
 > - **Core Hardening**: Security headers (Helmet, CORS), JWT access/refresh token rotation, password hashing (Argon2id), real OTP signup flow via free-tier email/SMS (Resend / Brevo / Twilio free tier) with Redis sliding window & exponential backoff, MFA/TOTP, RBAC/ABAC policy gates, session revocation blacklisting, rate limiting algorithms (GCRA, sliding window, token bucket), and HTTP idempotency key middleware.
+> - ℹ️ **Prerequisite Assumption**: *Assumes basic CRUD & simple SQL query familiarity (PostgreSQL table schemas, `SELECT`/`INSERT`/`UPDATE`). Level 0B uses standard repository queries to store users, hashes, and roles. Deep SQL internals (isolation levels, pool tuning, PgBouncer, zero-downtime migrations, banker's rounding) are explicitly taught and hardened in Level 0C.*
 > - ❌ **Scope Boundaries**: *Auth & Request lifecycle focus — database isolation/locking, testing harnesses, and protocol infrastructure deferred to 0C & 0D.*
+
+### 0B.0 Redis Foundations & Key-Value State Operations [EXPLANATION-HEAVY]
+
+- `[MUST-KNOW]` Redis Core Mental Model & In-Memory Architecture — Single-threaded event loop, RAM-speed key-value storage vs disk-based SQL databases, when to use Redis (ephemeral state, counters, locks, sessions) vs PostgreSQL (durable entity storage)
+- `[MUST-KNOW]` Node.js Redis Integration (`ioredis`) — Connection handling, client initialization, error listener reconnection handling, and async command execution (`await redis.get/set`)
+- `[MUST-KNOW]` Core Key Operations & Expiration TTL Semantics — String operations (`GET`, `SET`, `DEL`, `EXISTS`), Key Expiration TTLs (`EXPIRE`, `PEXPIRE`, `TTL`), and volatile key automatic eviction
+- `[MUST-KNOW]` Atomic Operations & Race Condition Prevention — Atomic increment/decrement (`INCR`, `DECRBY`), atomic conditional set (`SET key value EX seconds NX`), and basic Redis Lua scripting for multi-command atomic execution `[Prerequisite for 0B.1 Rate Limiting & 0B.3 Idempotency]`
+- `[MUST-KNOW]` Essential Data Structures — Hashes (`HSET`/`HGETALL` for user sessions), Sets (`SADD`/`SISMEMBER` for token blacklists), and Sorted Sets (`ZADD`/`ZREMRANGEBYSCORE` for sliding-window log rate limiting)
+- `[NOTE]` *Distributed Redis Cluster, Sentinel HA, persistence tuning (RDB/AOF), and advanced caching strategies (L1 vs L2, cache-aside, stampede mitigation) are deferred to Level 1.5 & Level 2.2.*
 
 ### 0B.1 Authentication, Real OTP Signup & Authorization
 
@@ -230,11 +239,10 @@ _Project Repo: `production-service-core` (Stage 3: Data Correctness & API Engine
 
 ### 0C.5 API Versioning, Deprecation & Evolution Engine
 
-- `[MUST-KNOW]` Versioning Strategies & Trade-Off Space — URI path (`/v1/users`), Custom Header (`X-API-Version: 2`), Accept Header / Media Type (`application/vnd.myapi.v2+json`), Query Param (`/users?version=2`), Date-Based Versioning (Stripe-style `Stripe-Version: 2024-01-15` per-request transformation layer), and Additive-Only / No-Versioning strategies
+- `[MUST-KNOW]` REST API Versioning Mechanics & Trade-Off Space — URI path (`/v1/users`), Custom Header (`X-API-Version: 2`), Accept Header / Media Type (`application/vnd.myapi.v2+json`), Query Param (`/users?version=2`), Date-Based Versioning (Stripe-style `Stripe-Version: 2024-01-15` per-request transformation layer), and Additive-Only / No-Versioning strategies `[Cross-Reference: Protocol-specific versioning for GraphQL & gRPC covered in Level 1.1; Webhooks in Level 3A.5]`
 - `[MUST-KNOW]` Categorizing Change Boundaries — Breaking (field removal, type mutation, semantic shifts, error code changes) vs Non-Breaking (optional fields, new endpoints) vs Gray-Area (adding required request fields, changing defaults/validation)
 - `[SHOULD-KNOW]` Deprecation & Sunset Lifecycle Protocols — RFC 8594 `Sunset` response headers, RFC 9745 `Deprecation` response headers, multi-stage deprecation windows (6-month notice / 12-month support), client version usage tracking middleware, automated migration changelogs, and scheduled brownout tests
 - `[SHOULD-KNOW]` Implementation & Routing Patterns — Gateway version routing (Envoy/Kong path & header filters `[See Cross-Reference: Level 4.1]`), controller-level in-app routing, Stripe-style per-version response transformation layers, and parallel version deployment
-- `[MUST-KNOW]` REST API Versioning Mechanics & Protocols — URI path, custom headers (`X-API-Version`), media type content negotiation (`Accept`), query parameters, and Stripe-style date-based versioning transformation pipelines `[Cross-Reference: Protocol-specific versioning for GraphQL & gRPC covered in Level 1.1; Webhooks in Level 3A.5]`
 - `[SHOULD-KNOW]` Versioning Failure Modes & Anti-Patterns — Version explosion, version freeze, silent breaking changes, ghost un-deletable versions, consumer lock-in, and over-versioning
 - `[EXPERT]` Spec, SDK & Tooling Integration — Multi-version OpenAPI/Swagger specs, `openapi-diff` breaking change detection in CI, API contract style guide enforcement (Spectral / Vacuum CLI linting for API naming & response envelope consistency), versioned client SDK generation, and per-version Pact contract testing
 
@@ -306,6 +314,8 @@ _Project: URL Shortener Service_
 - `[SHOULD-KNOW]` High-Performance API Protocols & Serialization Tuning — HTTP/2 & HTTP/3 multiplexing & connection reuse in production, response compression trade-offs (Brotli vs gzip), JSON serialization optimization (`fast-json-stringify` vs `JSON.stringify`), and Protocol Buffers vs JSON serialization benchmarks
 - `[EXPERT]` Binary Wire-Format Serialization & Content Negotiation — JSON vs MessagePack vs CBOR wire-format tradeoffs (payload size compression, CPU parsing overhead, schema requirements, browser ecosystem support), HTTP header content negotiation for binary payloads (`Accept: application/x-msgpack` vs `Accept: application/cbor`), and quantitative decision thresholds for transitioning HTTP REST endpoints from JSON to binary serialization
 - `[SHOULD-KNOW]` WebSockets/SSE/gRPC Deep Dive — Protocol selection matrices, gRPC Protobuf Package Versioning (`myapi.v1` / `myapi.v2`) & Immutable Field Numbering Rules, gRPC Server Reflection (`grpc-reflection` for dynamic service discovery without `.proto` files), gRPC Health Checking Protocol (`grpc.health.v1.Health` standard for load balancing & Kubernetes probes), and `gRPC-Web` proxy compatibility layer for browser-to-backend RPC calls `[Cross-Reference: Scaling WebSockets to millions of connections comes in Level 3B]`
+
+📜 **`[gRPC PROTOCOL DRILL 1.1]`**: Define a `.proto` service contract (`service OrderService { rpc CreateOrder (OrderRequest) returns (OrderResponse); rpc StreamOrderUpdates (OrderStreamRequest) returns (stream OrderStatusUpdate); }`). Implement a working Node.js gRPC server using `@grpc/grpc-js` and `@grpc/proto-loader`. Implement standard `grpc.health.v1.Health` probes, enable gRPC server reflection, and test unary & server-streaming RPC calls using `grpcurl` or Postman gRPC client.
 
 ### 1.1b Deep Node.js Engine & Runtime Internals `[EXPLANATION-HEAVY]`
 
@@ -524,7 +534,7 @@ _Project: Unified Production Platform (wiring Projects 1–3 together under ente
 > 📦 **Level 4 Build Scope & Scope Boundaries**:
 > - **MVP (Minimum Viable Version - Required to complete Level 4)**:
 >   - **Gateway & Auth Tier**: Envoy or Express Gateway with JWT validation & Redis distributed rate limiting.
->   - **Service Integration**: Wire Production Service Core (Level 0B + 0C + 0D) + Product Catalog (Level 2) + Order Processing Engine (Level 3A) together behind Gateway.
+>   - **Service Integration**: Wire Production Service Core (Level 0B + 0C + 0D) + Product Catalog (Level 2) + Order Processing Engine (Level 3A) together behind Gateway (using gRPC Protobuf for high-performance internal inter-service RPC communication and REST/GraphQL for edge Gateway client calls).
 >   - **Observability Tier**: Prometheus metrics + Grafana dashboard (p95/p99 latency, RPS, error rates) + OpenTelemetry trace propagation across services.
 >   - **CI/CD & Hardening**: Helm / Docker Compose deployment with an automated `k6` load-test script in CI and a written **Production Operations Runbook**.
 > - **Stretch Goals (Optional)**:
@@ -825,9 +835,9 @@ _Build an enterprise-grade AI Gateway and Hybrid RAG Engine in TypeScript/Docker
 _Mapped directly to roadmap levels for active reinforcement during topics. Each gets researched fresh (with current sources) when we cover it._
 
 - **Discord's migration from Cassandra to ScyllaDB** `[Reinforces Level 2.2 NoSQL & Level 3A.2 Database Scaling]`
-- **Instagram's Postgres sharding strategy** `[Reinforces Level 1.2 SQL & Level 3A.2 Database Scaling]`
+- **Instagram's Postgres sharding strategy** `[Reinforces Level 0C.1 SQL & Level 3A.2 Database Scaling]`
 - **GitHub's zero-downtime MySQL → Vitess sharding migration** `[Reinforces Level 3A.2 Database Scaling & Sharding]`
-- **Shopify's Pods architecture (scaling the monolith via cells)** `[Reinforces Level 4.1 Microservices, Level 4.5 Staff Restraint & Level 6.2 Cell Architecture]`
+- **Shopify's Pods architecture (scaling the monolith via cells)** `[Reinforces Level 4.1 Microservices, Level 4.5 Staff Restraint & Level 6.3 Cell Architecture]`
 - **Amazon Prime Video's microservices → monolith reversal** `[Reinforces Level 4.1 Microservices & Level 4.5 Staff Restraint]`
 - **Segment's famous $1M Kafka incident postmortem** `[Reinforces Level 3A.3 Event Streams, Level 3A.5 Webhooks & Level 4.5 Staff Restraint]`
 - **Cloudflare's postmortem culture & global outage RCAs** `[Reinforces Level 4.2 SRE & Level 4.1 Gateway Edge]`
@@ -837,11 +847,11 @@ _Mapped directly to roadmap levels for active reinforcement during topics. Each 
 - **Uber's H3 geospatial indexing and dispatch system evolution** `[Reinforces Level 3B.2 Real-Time Spatial & Level 5.4 Uber]`
 - **Netflix's chaos engineering culture & multi-region setup** `[Reinforces Level 4.2 SRE & Level 6.2 Active-Active]`
 - **Airbnb's service mesh & migration to SOA** `[Reinforces Level 4.1 Microservices & Gateway]`
-- **Facebook/Meta's TAO (social graph) and Haystack (photo storage)** `[Reinforces Level 1.5 Caching, Level 2.3 Storage & Module B TAO Paper]`
-- **Google GFS & Bigtable Architecture in Practice** `[Reinforces Level 2.3 Storage & Module B GFS/Bigtable Papers]`
+- **Facebook/Meta's TAO (social graph) and Haystack (photo storage)** `[Reinforces Level 1.5 Caching, Level 2.2 Graph Stores, Level 2.4 Unstructured Storage & Module B TAO Paper]`
+- **Google GFS & Bigtable Architecture in Practice** `[Reinforces Level 2.2 Wide-Column, Level 2.4 Object Storage & Module B Papers]`
 - **Amazon's original Dynamo paper vs DynamoDB productization** `[Reinforces Level 3A.4 Consensus & Level 5.2 Dynamo KV]`
 - **Slack's job queue and channel fan-out architecture** `[Reinforces Level 3A.3 Messaging & Level 5.3 Real-Time Chat]`
-- **WhatsApp's famously small server footprint** `[Reinforces Level 1.1 Node Internals & Level 5.3 Chat]`
+- **WhatsApp's famously small server footprint** `[Reinforces Level 1.1b Deep Node.js Engine & Level 5.3 Chat]`
 - **LinkedIn's Kafka origin story** `[Reinforces Level 3A.3 Messaging & Event Streams]`
 - **Figma/Google Docs: CRDT vs OT trade-offs in practice** `[Reinforces Level 5.10 Collaborative Editor]`
 
@@ -883,7 +893,7 @@ _Classic systems papers mapped directly to roadmap levels. Mapped with estimated
   💡 *Why this matters today: Demonstrates how to build multi-region read-heavy graph caching systems at petabyte scale.*
 - **Raft Consensus Paper (Ongaro & Ousterhout, 2014)** `[Reinforces Level 3A.4 Consensus]` — *Time Budget: 120 mins | Target: Full Deep Read* (Leader election, log replication, safety invariants, joint consensus membership changes).
   💡 *Why this matters today: Replaced Paxos as the understandable consensus algorithm powering etcd, Kubernetes, Vitess, and Consul.*
-- **Amazon Aurora Paper (Verbitski et al., 2017)** `[Reinforces Level 1.2 & Level 2.1 RDBMS Internals]` — *Time Budget: 60 mins | Target: Full Deep Read* (Log is the database, decoupled compute & storage, asynchronous quorum writes across 6 storage nodes).
+- **Amazon Aurora Paper (Verbitski et al., 2017)** `[Reinforces Level 2.1 RDBMS Internals & Level 3A.2 Database Scaling]` — *Time Budget: 60 mins | Target: Full Deep Read* (Log is the database, decoupled compute & storage, asynchronous quorum writes across 6 storage nodes).
   💡 *Why this matters today: Defined modern cloud-native database design by decoupling compute nodes from log-structured storage.*
 
 ---
@@ -892,9 +902,9 @@ _Classic systems papers mapped directly to roadmap levels. Mapped with estimated
 
 _Not part of the core path — pull from here only if/when you want to go a level deeper than high-level application backend engineering._
 
-- **OS process/thread model, virtual memory, paging, context switching** `[Cross-Reference: Level 0A.6 Structured Concurrency & Level 1.1b Node Internals]`
+- **OS process/thread model, virtual memory, paging, context switching** `[Cross-Reference: Level 0A.0 Node.js Concurrency & Level 1.1b Node Internals]`
 - **Filesystem internals (inodes, journaling, `fsync`, `mmap`)** `[Cross-Reference: Level 1.5 Storage Mechanics & Level 3A.3 Commit Logs]`
-- **Linux CPU scheduler (CFS), memory allocators (`jemalloc`/`tcmalloc`)** `[Cross-Reference: Level 6.1 Low Latency & Level 0A Engine Setup]`
+- **Linux CPU scheduler (CFS), memory allocators (`jemalloc`/`tcmalloc`)** `[Cross-Reference: Level 1.1b Deep Node.js Engine & Level 6.1 Low Latency]`
 - **`io_uring`, kernel bypass (DPDK/eBPF) concepts** `[Cross-Reference: Level 6.1 Ultra-Low Latency Engineering]`
 - **NUMA, SIMD, cache-line/false-sharing awareness** `[Cross-Reference: Level 6.1 Lock-Free Ring Buffers]`
 - **V8 / Node.js GC internals, heap dumps & flame graph profiling** `[Cross-Reference: Level 1.1b Node Internals & Level 0D.3 Memory Leak Profiling]`
