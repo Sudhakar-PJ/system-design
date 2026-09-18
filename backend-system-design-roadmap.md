@@ -1,8 +1,8 @@
 # Backend Engineering & System Design Mastery Roadmap
 
-> A living document. Progress, notes, and session handoff state live at the bottom and get updated as we go — reopen this link on any device to pick up exactly where you left off.
+> A living document. Progress, notes, and session state live in the **📌 Current State** block near the top. The **Living Error Journal** lives at the bottom. Reopen this link on any device to pick up exactly where you left off.
 
-**Legend**: `[MUST-KNOW]` mandatory core hands-on build · `[SHOULD-KNOW]` senior production engineering standards · `[EXPERT]` conceptual literacy & high-scale awareness (no build required).
+**Legend**: `[MUST-KNOW]` mandatory core hands-on build · `[SHOULD-KNOW]` senior production engineering standards · `[EXPERT]` conceptual literacy & high-scale awareness (no build required unless annotated `[EXPERT · buildable]`) · `[NOTE]` informational pointer; indicates a topic deferred to a later level.
 
 **How we'll actually work through this**: for each subtopic, I explain it in full depth — what/why/how/failure modes — with code in the layer it belongs to (`routes → controllers → services → repository → config`), plus diagrams/flowcharts where they help, and I generate a dedicated course-material file for that subtopic. No forced quizzes, no interview-Q&A files. You confirm understanding in your own words before we move on, at your pace.
 
@@ -12,15 +12,16 @@
 
 ## 🤖 AI Instructor Guidelines (Operating Rules)
 
-- **Strict Single-File & Zero-Auto-Execution Protocol** — Code and terminal commands are delivered strictly inside chat response blocks (never auto-written to disk or executed via shell by the AI). Every single response delivers **EXACTLY ONE FILE AT A TIME**, accompanied by:
-  1. **5 Ws & 1 H Breakdown** (*Who, What, Where, When, Why, and How* this file fits into production architecture).
-  2. **Core Concept Explanation** (architectural theory & trade-offs).
-  3. **Complete Production-Grade Code Block** (zero placeholders, zero omitted lines).
-  4. **TypeScript Syntax & Design Callout** (explaining specific TS features, generics, types, or interfaces used).
+- **Dual-Mode Delivery & Zero-Auto-Execution Protocol** — Code and commands are delivered strictly inside chat response blocks (never auto-written to disk or executed via shell by the AI). The AI operates in one of two distinct modes depending on the subtopic:
+  - **Mode A: Code Implementation Mode** (when building project code files): Delivers **EXACTLY ONE CODE FILE PER RESPONSE**, wrapped alongside its markdown explanation breakdown:
+    1. **5 Ws & 1 H Breakdown** (*Who, What, Where, When, Why, and How* this file fits into production architecture).
+    2. **Architectural Placement & Flow** (where this file sits in `routes → controllers → services → repository → config`).
+    3. **Complete Production-Grade Code Block** (the single code file delivered with zero placeholders or omitted lines).
+    4. **TypeScript Syntax & Design Callout** (explaining specific TS features, generics, types, or interfaces used).
+  - **Mode B: Conceptual & Explanation-Heavy Mode** (when covering engine internals, theory, or system design trade-offs): AI instructors are explicitly authorized and expected to provide long, comprehensive, in-depth explanations with execution flowcharts, diagrams, step-by-step traces, failure modes, and code snippets where applicable. Rushing or artificially truncating complex topics is prohibited.
 - **Course-material files, not quizzes or interview files** — every subtopic gets a dedicated, detailed course-material file (theory, code, diagrams/flowcharts). No forced active-recall quizzes, no separate interview-prep Q&A files.
-- **Explanation-Heavy & Deep-Dive Authorization Protocol** — Certain topics across this syllabus (e.g., **Node.js Runtime & Engine Internals**, V8 heap & GC, Libuv event loop mechanics, stream backpressure, distributed consensus, low-level OS threading) are inherently explanation-heavy. AI instructors are explicitly authorized and expected to provide long, comprehensive, and detailed explanations — complete with diagrams, step-by-step execution traces, and failure-mode breakdowns — whenever needed to ensure thorough conceptual understanding. Rushing or artificially truncating complex topics is prohibited.
 - **Prerequisite / cross-reference tags** — recurring concepts (consistent hashing, Raft, Bloom filters, rate limiting, etc.) carry `[Prerequisites: ...]` / `[See Also: ...]` tags so later topics build on earlier ones instead of re-explaining from scratch.
-- **Proactive Case Study & Systems Paper Triggers (Module A & B)** — Whenever a subtopic is reached or completed (e.g., Level 0B.5 API Versioning), the AI instructor will automatically check Module A (Case Studies) and Module B (Seminal Papers) for any cross-referenced items (e.g., *Stripe's Date-Based API Versioning Case Study*) and explicitly prompt you: *"We've just reached/completed Level 0B.5! This unlocks [Case Study/Paper Name]. Would you like to dive into its engineering breakdown/digest right now, or keep moving forward on the core roadmap path?"*
+- **Proactive Case Study & Systems Paper Triggers (Module A & B)** — Whenever a subtopic is reached or completed (e.g., Level 0C.5 API Versioning), the AI instructor will automatically check Module A (Case Studies) and Module B (Seminal Papers) for any cross-referenced items (e.g., *Stripe's Date-Based API Versioning Case Study*) and explicitly prompt you: *"We've just reached/completed Level 0C.5! This unlocks [Case Study/Paper Name]. Would you like to dive into its engineering breakdown/digest right now, or keep moving forward on the core roadmap path?"*
 - **Level 7 Awareness Protocol** — AI writes one concise, high-impact conceptual explanation per subtopic (what it is, why it exists, where it's used in production at scale), and you confirm understanding by restating it in your own words before we move on.
 - **Open-Source Code Dissection Drills** — Beyond writing our own code, we actively inspect and explain real production open-source modules (e.g. BullMQ Redis Lua scripts, Express router stack, Debezium CDC connectors, Envoy rate-limit filters) to master reading unfamiliar high-grade codebases.
 - **Mock Staff Architect Design Defense & Capstone Protocol** — At major system design milestones (Level 4 Unified Platform and every Level 5 MAANG Capstone), you independently sketch your architecture on paper/Excalidraw at your own pace (no timer/pressure). You then present your design, and the AI acts as a FAANG Staff Engineer / Principal Architect, grilling your design on single points of failure (SPOFs), scalability spikes (10x/100x), edge cases, and trade-offs before revealing the reference solution and conducting a Gap Analysis.
@@ -29,16 +30,20 @@
 - **Production Portfolio README Artifact** — At the completion of every project (Level 0A through Level 4), we generate a production-grade `README.md` complete with C4 Container diagrams, benchmark load-test results, core architectural trade-offs, and a Staff-level *"What I would do differently at 10x scale"* section.
 - **Level Architecture Retrospective & Lessons Learned** — At the conclusion of every level, we write a concise **Level Retrospective** artifact summarizing key trade-offs mastered, anti-patterns avoided, and personal engineering cheat-sheets to compound learning alongside the Error Journal.
 - **Zero-spend guarantee** — every tool, database, or AI model used across every project is free, open-source, and self-hostable via Docker (or a free-tier API where local hardware genuinely can't run it locally). Never a paid subscription or paid cloud tier.
-- **Session handoff** — whenever you say something like "that's enough for today," I update the **Session Handoff State** section at the bottom with exactly where we stopped and what's next, before we close out.
+- **Session handoff** — whenever you say something like "that's enough for today," I update the **📌 Current State** section at the top with exactly where we stopped and what's next, before we close out.
 
 ---
 
-## 📊 Progress Dashboard
+## 📌 Current State
+
+> Single source of truth for session tracking, updated at the end of every session. Note: The Living Error Journal lives at the bottom of this document.
 
 - **Current Level**: `Not started — Level 0A.0`
-- **Current Project**: `production-service-core (Stage 1)`
+- **Current Project**: `production-service-core (Stage 1: Architecture Scaffold)`
 - **Overall Completion**: `0 subtopics completed`
-- **Last session**: `—`
+- **Next Starting Point**: **Level 0A.0 — Node.js Concurrency & Event Loop Mental Model**
+- **Last Session Date**: `—`
+- **Session Notes**: `—`
 
 ---
 
@@ -48,9 +53,9 @@ Instead of one giant master project, each project below is scoped to teach a spe
 
 | Level | Project Repo / Deliverable | Primary Concepts Exercised | Build Scope & Deliverable Boundaries |
 | :--- | :--- | :--- | :--- |
-| **0A & 0B** | **Production Service Core**<br>*(Single Hardened Repo)* | **Stage 0A**: Clean layered architecture, typed error handling, Pino logging, Zod validation<br>**Stage 0B**: Auth (JWT/Argon2id), SQL transactions, pool tuning, Redis rate-limiting, idempotency, Docker | **Full Production-Hardened REST API**<br>• *Stage 0A*: Core architecture & logging (No Auth/Locks)<br>• *Stage 0B*: Production hardening release |
+| **0A, 0B, 0C & 0D** | **Production Service Core**<br>*(Single Hardened Repo)* | **Stage 0A**: Clean layered architecture, typed error handling, Pino logging, Zod validation<br>**Stage 0B**: Auth (JWT/Argon2id), OTP, MFA, RBAC/ABAC, Helmet, CORS, Rate Limiting, Idempotency<br>**Stage 0C**: SQL internals, isolation levels, transactions, pool tuning, PgBouncer, migrations, money precision, i18n/l10n, versioning<br>**Stage 0D**: Testcontainers, MSW, TCP/TLS/DNS/HTTP2-3, graceful shutdown, profiling, cron | **Full Production-Hardened REST API**<br>• *Stage 0A*: Core architecture & logging (No Auth/Locks)<br>• *Stage 0B*: Auth & Security Hardening<br>• *Stage 0C*: Data Correctness & SQL Foundations<br>• *Stage 0D*: Ops, Protocols & Test Suite Release |
 | **1** | **URL Shortener** | Caching patterns, cache stampede/penetration, Base62 encoding, hot-key handling | **Shorten + redirect + Redis cache + analytics endpoint**<br>❌ *No auth* |
-| **2** | **Product Catalog / Search** | Indexing strategy, full-text/inverted index search, CDC sync pipeline, pagination at scale | **CRUD + search + pagination + Postgres/Elasticsearch CDC sync**<br>❌ *No auth* |
+| **2** | **Product Catalog / Search** | Indexing strategy, full-text/inverted index search, CDC sync pipeline, pagination at scale, GraphQL & DataLoader batching | **CRUD + REST/GraphQL search + pagination + Postgres/Elasticsearch CDC sync**<br>❌ *No auth* |
 | **3A** | **Order Processing Service** | Event-driven architecture, Outbox pattern, Saga orchestration, Kafka queues | **Checkout $\rightarrow$ Outbox $\rightarrow$ Kafka $\rightarrow$ Saga $\rightarrow$ Compensation**<br>❌ *No UI (100% backend/event-driven)* |
 | **3B** | **Real-Time Location & Chat** | WebSockets at scale, Pub/Sub fan-out, presence tracking, geo-indexing (H3/Geohash) | **WebSocket Gateway + presence tracking + Geo dispatch**<br>❌ *No message history UI* |
 | **4** | **Unified Production Platform** | Wiring 1–3B behind API gateway, OpenTelemetry, Grafana observability, K8s, Canary rollouts | **Wire Services 1–3B behind Envoy Gateway + Observability + Runbook** |
@@ -69,15 +74,12 @@ _Project Repo: `production-service-core` (Stage 1: Architecture Scaffold)_
 > - **Core Features**: Node.js Event Loop & Microtask internals + Clean layered REST architecture + Pino logging + AsyncLocalStorage request correlation IDs + Zod schema validation + RFC 7807 typed error handling envelopes.
 > - ❌ **Scope Boundaries**: *Stage 1 focus — no authentication, no authorization, no database transactions, no complex locks.*
 
-### 0A.0 Node.js Engine & Runtime Internals `[EXPLANATION-HEAVY]`
+### 0A.0 Node.js Concurrency & Event Loop Mental Model
 
-> 💡 **Explanation-Heavy Topic**: Node.js runtime mechanics (Libuv phase transitions, microtask queue execution order, V8 memory & GC, stream backpressure) are inherently complex. AI instructors are expected to provide comprehensive, in-depth, long explanations with execution flowcharts and step-by-step trace breakdowns to ensure complete conceptual mastery.
-
-- `[MUST-KNOW]` Libuv Event Loop Architecture & Phases — Timers (`setTimeout`/`setInterval`) $\rightarrow$ Pending I/O Callbacks $\rightarrow$ Idle/Prepare $\rightarrow$ Poll (I/O execution & socket polling) $\rightarrow$ Check (`setImmediate`) $\rightarrow$ Close Callbacks
-- `[MUST-KNOW]` Microtasks vs Macrotasks Execution Order — `process.nextTick` queue vs `Promise` microtask queue vs libuv macrotask phase transitions, event loop starvation risks (recursive `nextTick` / microtask loops)
-- `[SHOULD-KNOW]` V8 Engine Memory Model & Garbage Collection — V8 Heap structure (New Space / Scavenger GC vs Old Space / Mark-Sweep-Compact GC), C++ Native Memory vs V8 Heap (`Buffer`/`ArrayBuffer`), V8 heap limits (`--max-old-space-size`), memory leak patterns (dangling closures, global event listeners)
-- `[MUST-KNOW]` Node.js Streams, Pipes & Backpressure Management — Readable, Writable, Transform, and Duplex stream pipelines, `highWaterMark` buffer thresholds, handling `drain` events, avoiding memory spikes during high-throughput I/O
-- `[SHOULD-KNOW]` Process Threads, Clustering & Worker Threads — Single-threaded main event loop vs libuv thread pool (`UV_THREADPOOL_SIZE` for crypto/fs/zlib) vs `worker_threads` (CPU-bound offloading) vs OS-level cluster process fork (`cluster` module)
+- `[MUST-KNOW]` Single-Threaded Concurrency Model — Why Node.js uses an event-driven loop instead of thread-per-request OS threads (Node vs Java/Go concurrency models), non-blocking I/O fundamentals
+- `[MUST-KNOW]` Microtasks vs Macrotasks Execution Order — `process.nextTick` queue vs `Promise` microtask queue vs `setImmediate` macrotasks, unhandled rejection execution flow, and why async microtask bugs break Express error-handling middleware
+- `[MUST-KNOW]` `async/await` Execution Mechanics & Scheduling — How JavaScript generators/promises pause function execution without blocking the single thread
+- `[NOTE]` *Deep Libuv phase transitions, V8 GC algorithms, stream backpressure, and worker threads are covered in Level 1.1b after building your first production API services.*
 
 ### 0A.1 Architecture & Project Structure
 
@@ -126,7 +128,7 @@ _Project Repo: `production-service-core` (Stage 1: Architecture Scaffold)_
 ### 0A.6 Structured Concurrency & Advanced Async Patterns [EXPLANATION-HEAVY]
 
 - `[MUST-KNOW]` Advanced Promise Execution Controls — `Promise.all` vs `Promise.allSettled` vs `Promise.any` vs `Promise.race` (exact execution semantics, unhandled rejection pitfalls, and partial failure handling strategies)
-- `[MUST-KNOW]` Request & Query Cancellation with `AbortController` / `AbortSignal` — propagating cancellation signals across HTTP fetch requests, PostgreSQL query executions, Redis commands, and Node.js streams
+- `[MUST-KNOW]` Request & Query Cancellation with `AbortController` / `AbortSignal` — propagating cancellation signals across HTTP fetch requests, Node.js streams, and asynchronous operations `[Conceptual Teaser: PostgreSQL query cancellation & Redis command aborts covered when DBs are introduced in 0B/0C]`
 - `[SHOULD-KNOW]` Advanced `AsyncLocalStorage` Contexts — request-scoped DB transaction handles, tenant context propagation, feature flag overrides, and correlation context propagation without parameter drilling
 - `[SHOULD-KNOW]` Structured Concurrency Discipline — ensuring child background tasks are explicitly joined or cancelled before parent HTTP handlers return
 - `[SHOULD-KNOW]` Unhandled Promise Rejection Tracing — linking asynchronous stack traces back to originating HTTP request correlation IDs
@@ -137,15 +139,14 @@ _Project Repo: `production-service-core` (Stage 1: Architecture Scaffold)_
 
 ---
 
-## Level 0B — Production Hardening & Resilience
+## Level 0B — Request Lifecycle: Auth, Security & Idempotency
 
-_Project Repo: `production-service-core` (Stage 2: Production Hardening Release)_
+_Project Repo: `production-service-core` (Stage 2: Security, Auth & Idempotency Module)_
 
 > 📦 **Level 0B Build Scope & Deliverables**:
-> - **Deliverable**: `production-service-core` repository **Stage 2 (Hardened Release)** running in Docker.
-> - **Core Hardening**: Security middleware (Helmet, CORS, Rate Limiting), JWT auth with real OTP signup flow via free-tier email/SMS (Resend / Brevo / Twilio free tier) with real exponential backoff & idempotent resend logic, structured logging (Pino), Graceful shutdown, Transactional DB operations (Prisma/Kysely + Postgres), Redis caching layer, and HTTP Idempotency key middleware.
-> - **Testing Tier**: Comprehensive automated test suite with Testcontainers (ephemeral Postgres & Redis instances per test suite), MSW / Nock for mocking third-party OTP & payment HTTP APIs, and factory-bot fixture generators.
-> - ❌ **Scope Boundaries**: *Single service repo hardening — no microservice gateways or cross-service event streams.*
+> - **Deliverable**: `production-service-core` **Stage 2 (Auth & Request Hardening)**.
+> - **Core Hardening**: Security headers (Helmet, CORS), JWT access/refresh token rotation, password hashing (Argon2id), real OTP signup flow via free-tier email/SMS (Resend / Brevo / Twilio free tier) with Redis sliding window & exponential backoff, MFA/TOTP, RBAC/ABAC policy gates, session revocation blacklisting, rate limiting algorithms (GCRA, sliding window, token bucket), and HTTP idempotency key middleware.
+> - ❌ **Scope Boundaries**: *Auth & Request lifecycle focus — database isolation/locking, testing harnesses, and protocol infrastructure deferred to 0C & 0D.*
 
 ### 0B.1 Authentication, Real OTP Signup & Authorization
 
@@ -157,18 +158,48 @@ _Project Repo: `production-service-core` (Stage 2: Production Hardening Release)
 - `[SHOULD-KNOW]` Multi-Factor Authentication (MFA / 2FA) & TOTP — Time-based One-Time Password generation (`speakeasy`/`otplib`), QR code provisioning, backup recovery codes, and MFA verification middleware
 - `[SHOULD-KNOW]` Password Reset & Passwordless Magic Links — Secure short-lived token generation, email magic links (`crypto.randomBytes`), single-use token invalidation, and rate-limiting password resets
 - `[MUST-KNOW]` Role-Based & Attribute-Based Access Control (RBAC & ABAC) — Roles, dynamic permissions, hierarchical permission inheritance, context-aware policy gates (e.g. `user:edit_own_resource`), and audit trail logging for sensitive role changes
-- `[EXPERT]` Immutable & Tamper-Evident Audit Logging System — Append-only audit logs, cryptographic tamper-evidence (hash chains / Merkle tree logging), standardized audit event schemas (`who`, `what`, `when`, `where`, `why`, actor vs subject), regulatory retention rules (e.g. 7 years for financial records), and SIEM integration / syslog forwarding pipelines for compliance proof
+- `[EXPERT · buildable]` Immutable & Tamper-Evident Audit Logging System — Append-only audit logs, cryptographic tamper-evidence (hash chains / Merkle tree logging), standardized audit event schemas (`who`, `what`, `when`, `where`, `why`, actor vs subject), regulatory retention rules (e.g. 7 years for financial records), and SIEM integration / syslog forwarding pipelines for compliance proof
 - `[MUST-KNOW]` Session revocation & token blacklisting (Redis)
 
-### 0B.2 SQL & Query Fundamentals [EXPLANATION-HEAVY]
+### 0B.2 Request Security Essentials & Rate Limiting Engine [EXPLANATION-HEAVY]
+
+- `[MUST-KNOW]` Security headers (Helmet: CSP, HSTS, X-Frame-Options, X-Content-Type-Options, etc.)
+- `[MUST-KNOW]` CORS done properly (origin whitelisting, preflight cache `Access-Control-Max-Age`, credential handling)
+- `[MUST-KNOW]` Rate Limiting Algorithms & Engineering Deep Dive — Fixed Window vs Sliding Window Log vs Sliding Window Counter vs Token Bucket vs Leaky Bucket (smooth output rate) vs GCRA (Generic Cell Rate Algorithm - single-key Redis memory efficient rate limiter) vs Concurrent Request Limiting (capping in-flight active requests) vs Server Load-Adaptive Rate Limiting (dynamically tightening rate limits when CPU/RAM or DB pool saturates) `[Cross-Reference: Level 4.1 Rate Control Taxonomy]`
+- `[SHOULD-KNOW]` Request Device Fingerprinting & IP Geolocation — Parsing `X-Forwarded-For`, trusted proxies, MaxMind GeoIP lookup for suspicious login detection, and User-Agent device parsing
+- `[MUST-KNOW]` Payload size limits + payload compression (brotli/gzip middleware trade-offs)
+
+### 0B.3 Third-Party Integration & Enterprise Idempotency System [EXPLANATION-HEAVY]
+
+- `[SHOULD-KNOW · Revisit in Level 3A/4]` Retries, Circuit Breakers & Retry Budgeting Discipline — Exponential backoff with full jitter, Circuit breaker pattern (closed $\rightarrow$ open $\rightarrow$ half-open states), Retry Budgeting (capping total retry requests at max 10% of overall service traffic to prevent retry storms), Retry Amplification Prevention (preventing cascading retries across multi-tier call chains Client $\rightarrow$ Gateway $\rightarrow$ Service $\rightarrow$ DB), and Hedged Requests (firing parallel backup requests after p99 latency threshold to cut tail latency)
+- `[MUST-KNOW]` Webhook signature verification (HMAC-SHA256)
+- `[MUST-KNOW]` HTTP Idempotency Key Architecture — Redis storage, lock-based deduplication, TTL management & storage cost vs safety trade-offs, payload caching & replay response semantics
+- `[MUST-KNOW]` DB-Write Idempotency & SQL Collision Handling — `ON CONFLICT DO NOTHING` vs `DO UPDATE`, `WHERE NOT EXISTS`, detecting idempotency key collision (same key with different payload error responses)
+- `[SHOULD-KNOW]` Read & Multi-Step Task Idempotency `[Prerequisite Teaser — Distributed Saga step compensation idempotency covered in full in Level 3A.3]` — Idempotency keys for expensive/side-effecting endpoints, multi-step workflow compensation idempotency, and replay-safe read operations
+
+🧪 **`[DRILL 0B]`**: Build & test real OTP verification signup with Argon2id password hashing, Redis sliding window rate-limiting, and HTTP idempotency key deduplication.
+🔎 **`[DISSECTION 0B]`**: Inspect `express-rate-limit` & `ioredis` scripts — read and explain atomic Lua script execution for sliding-window rate limiting in Redis.
+
+---
+
+## Level 0C — Data Correctness & Protocol Foundations
+
+_Project Repo: `production-service-core` (Stage 3: Data Correctness & API Engine)_
+
+> 📦 **Level 0C Build Scope & Deliverables**:
+> - **Deliverable**: `production-service-core` **Stage 3 (Data & Protocol Engine)**.
+> - **Core Engineering**: SQL transactions, isolation levels, optimistic vs pessimistic locking, connection pool tuning, PgBouncer, read replica routing, zero-downtime expand-contract migrations, soft-delete vacuuming, money/currency precision (`NUMERIC`/`BIGINT`/banker's rounding), Unicode & grapheme cluster safety, SQL 3-valued logic, deep HTTP status & conditional requests (`If-Match`/ETag optimistic concurrency), response headers (`Sunset`/`Deprecation` RFCs), multi-version REST API routing (URI path, custom header, date-based version transformation layer), and breaking change detection in CI (`openapi-diff`).
+> - ❌ **Scope Boundaries**: *Focus on data integrity & protocol contracts — testing infrastructure, OS profiling, and Docker deployment deferred to Level 0D.*
+
+### 0C.1 SQL & Query Fundamentals [EXPLANATION-HEAVY]
 
 - `[MUST-KNOW]` Joins, subqueries, aggregates, `GROUP BY`/`HAVING` — quick refresh with production-style examples
 - `[MUST-KNOW]` Transactions: `BEGIN/COMMIT/ROLLBACK/SAVEPOINT`
-- `[MUST-KNOW]` Isolation levels and the anomalies they prevent (dirty/non-repeatable/phantom reads) — you'll _see_ each anomaly happen
-- `[MUST-KNOW]` Optimistic locking (version column + retry) vs pessimistic locking (`SELECT ... FOR UPDATE`) — when to use which, with a financial-transfer example
+- `[MUST-KNOW]` Isolation levels (Dirty/Non-Repeatable/Phantom reads) & anomaly prevention — you'll _see_ each anomaly happen in code
+- `[MUST-KNOW]` Optimistic locking (version column + retry) vs pessimistic locking (`SELECT ... FOR UPDATE`) — when to use which, with financial transfer examples
 - `[SHOULD-KNOW]` MongoDB CRUD basics + client-session transactions
 
-### 0B.3 Database Access Layer & Backend i18n/l10n Handling [EXPLANATION-HEAVY]
+### 0C.2 Database Access Layer, Connection Management & Migrations [EXPLANATION-HEAVY]
 
 - `[MUST-KNOW]` Connection pool tuning (min/max, idle/acquire timeouts)
 - `[MUST-KNOW]` Unit-of-work pattern, transaction boundaries
@@ -176,24 +207,24 @@ _Project Repo: `production-service-core` (Stage 2: Production Hardening Release)
 - `[MUST-KNOW]` Production Database Migrations & Zero-Downtime Schema Evolution — Lock-safe migrations (avoiding `ACCESS EXCLUSIVE` table locks on live DBs), Expand-Contract pattern (nullable column addition → dual-write deploy → batched backfill → old column drop), batched idempotent background backfills, rollback safety (reversible vs irreversible migrations), migration tooling comparison (Prisma Migrate vs Kysely vs `node-pg-migrate` vs Flyway), testing migrations against production-sized copies, and schema drift CI enforcement `[Cross-Reference: Level 6.3 Live Schema Migrations]`
 - `[MUST-KNOW]` Soft-Delete Pattern, Hard Deletion & Data Retention Lifecycle — `deleted_at` query filtering, cascade soft-delete, automated database vacuuming of expired soft-deleted records, and audit logging
 - `[SHOULD-KNOW]` Database Connection Pool Exhaustion & Backpressure — Inspecting `pg_stat_activity`, waiting query chains, lock graph inspection, statement timeout vs query timeout vs pool acquire timeout differences, PgBouncer (transaction pooling vs session pooling, prepared statement handling), connection backpressure (queue depth limits, reject-when-full behavior), and Read Replica Routing (splitting read/write connections, handling replication lag anomalies)
-- `[EXPERT]` Backend Internationalization (i18n) & Localization (l10n) Architecture — Locale-aware API header negotiation (`Accept-Language`), UTC timestamp storage with timezone-aware query conversion, localized error response templates, multi-language database column modeling (JSONB vs translation tables), Unicode CLDR pluralization rules (`zero`/`one`/`two`/`few`/`many`/`other`), locale-aware number formatting (decimal separators, digit grouping `1,000` vs `1.000`), currency display formatting (symbol positioning, spacing), Right-to-Left (RTL) bidirectional text handling & string order preservation, culture-aware name formatting (given vs family name ordering), country-specific address schema formatting, and database ICU locale-aware collation (e.g. Swedish vs German string sorting rules)
 
-### 0B.4 Security Essentials [EXPLANATION-HEAVY]
+### 0C.3 Data Correctness & Domain Fundamentals (Money, Unicode & Nulls) [EXPLANATION-HEAVY]
 
-- `[MUST-KNOW]` Security headers (Helmet: CSP, HSTS, etc.)
-- `[MUST-KNOW]` CORS done properly
-- `[MUST-KNOW]` Rate Limiting Algorithms & Engineering Deep Dive — Fixed Window vs Sliding Window Log vs Sliding Window Counter vs Token Bucket vs Leaky Bucket (smooth output rate) vs GCRA (Generic Cell Rate Algorithm - single-key Redis memory efficient rate limiter) vs Concurrent Request Limiting (capping in-flight active requests) vs Server Load-Adaptive Rate Limiting (dynamically tightening rate limits when CPU/RAM or DB pool saturates) `[Cross-Reference: Level 4.1 Rate Control Taxonomy]`
-- `[SHOULD-KNOW]` Request Device Fingerprinting & IP Geolocation — Parsing `X-Forwarded-For`, trusted proxies, MaxMind GeoIP lookup for suspicious login detection, and User-Agent device parsing
-- `[MUST-KNOW]` Payload size limits + compression
+- `[MUST-KNOW]` Money, Currency & Numeric Precision Architecture — Why floating-point money causes production bugs (`0.1 + 0.2 !== 0.3`), integer minor units (cents) vs arbitrary-precision decimal libraries (`decimal.js`, `big.js`), PostgreSQL column selection (`NUMERIC` vs `MONEY` vs `BIGINT`), BigInt vs number overflow (IDs, timestamps, balances), currency ISO 4217 minor unit variations (JPY = 0 decimals, KWD = 3 decimals), rounding algorithms (banker's rounding, half-up, half-even), currency conversion pipelines (rate sources, historical rates, spread), and tax calculation precision (VAT/GST/US sales tax nexus rules)
+- `[MUST-KNOW]` Text Encoding, Unicode & Internationalization Security — UTF-8 vs UTF-16 vs ASCII internal byte representations, Unicode normalization (`NFC`, `NFD`, `NFKC`, `NFKD`) for email uniqueness & username collision prevention, Grapheme clusters (emoji, flag sequences, ZWJ family sequences, skin tone modifiers) where string length $\neq$ character count, string length vs byte length vs grapheme length for DB column sizing & truncation, case folding edge cases (Turkish dotless `ı`, German `ß`), URL encoding (`encodeURIComponent` vs `encodeURI`, `%20` vs `+`), CSV/JSON formula injection security (`=cmd|...`), and null-byte/control character input sanitization
+- `[MUST-KNOW]` Null Semantics, Optionality & SQL Three-Valued Logic — `null` vs `undefined` vs missing keys across JSON serialization, PostgreSQL, and TypeScript, SQL three-valued logic (`NULL = NULL` evaluates to `UNKNOWN`), optional & nullable field modeling across validation schemas (Zod `.optional()` vs `.nullable()`, Protobuf field presence vs Avro unions), and API design consistency rules (`empty array []` vs `null` vs `404` for empty collection responses)
+- `[EXPERT · buildable]` Backend Internationalization (i18n) & Localization (l10n) Architecture — Locale-aware API header negotiation (`Accept-Language`), UTC timestamp storage with timezone-aware query conversion, localized error response templates, multi-language database column modeling (JSONB vs translation tables), Unicode CLDR pluralization rules (`zero`/`one`/`two`/`few`/`many`/`other`), locale-aware number formatting (decimal separators, digit grouping `1,000` vs `1.000`), currency display formatting (symbol positioning, spacing), Right-to-Left (RTL) bidirectional text handling & string order preservation, culture-aware name formatting (given vs family name ordering), country-specific address schema formatting, and database ICU locale-aware collation (e.g. Swedish vs German string sorting rules)
 
-### 0B.4b Networking & Protocol Foundations [EXPLANATION-HEAVY]
+### 0C.4 Deep HTTP Semantics & Protocol Controls
 
-- `[MUST-KNOW]` Transport Layer Protocols (TCP vs UDP) — TCP 3-way handshake (`SYN`, `SYN-ACK`, `ACK`), connection teardown (`FIN`/`RST`), TCP windowing & socket backpressure, socket exhaustion handling (`ulimit -n`), TCP keep-alive, vs UDP trade-offs in DNS lookups & real-time streams
-- `[SHOULD-KNOW]` TLS/SSL Cryptographic Security & Certificate Lifecycle — TLS 1.2 vs 1.3 handshake mechanics (0-RTT/1-RTT latency impact), cipher suites, SNI, ALPN protocol negotiation, mTLS (mutual TLS), wildcard vs SAN certificates, automated ACME / Let's Encrypt issuance & renewal
-- `[MUST-KNOW]` DNS Infrastructure & Resolution Pipeline — Record types (`A`, `AAAA`, `CNAME`, `MX`, `TXT`, `NS`), recursive vs authoritative resolution flow, DNS caching & TTL propagation delays, split-horizon DNS, negative DNS caching behavior
-- `[MUST-KNOW]` HTTP Protocol Evolution (HTTP/1.1 vs HTTP/2 vs HTTP/3) — HTTP/1.1 (head-of-line blocking, Keep-Alive connection pools) vs HTTP/2 (binary framing layer, stream multiplexing over single TCP connection, HPACK header compression) vs HTTP/3 (QUIC protocol over UDP, 0-RTT connection establishment, IP migration resilience)
+- `[MUST-KNOW]` Status Code Taxonomy & Discipline — 400 Bad Request vs 422 Unprocessable Entity vs 409 Conflict vs 412 Precondition Failed, 401 Unauthorized vs 403 Forbidden, 402 Payment Required, 405 Method Not Allowed
+- `[MUST-KNOW]` HTTP Layer Optimistic Concurrency & Conditional Requests — `If-Match`, `If-None-Match`, `If-Unmodified-Since`, `If-Modified-Since`, ETag validation
+- `[SHOULD-KNOW]` Range Requests & Large Media Streams — `Range`, `Content-Range`, `206 Partial Content` (video streaming, large chunk downloads)
+- `[MUST-KNOW]` Redirect Semantics & Method Preservation — 301 Moved Permanently vs 302 Found vs 307 Temporary Redirect vs 308 Permanent Redirect (method preservation rules)
+- `[MUST-KNOW]` Response Location & Retry Headers — `201 Created` with `Location` header, `429 Too Many Requests` / `503 Service Unavailable` with `Retry-After` headers
+- `[MUST-KNOW]` Protocol Methods & Content Negotiation — `OPTIONS`, `HEAD`, `TRACE`, `Accept`, `q=` weights, `Vary` headers
 
-### 0B.5 API Versioning, Deprecation & Evolution Engine
+### 0C.5 API Versioning, Deprecation & Evolution Engine
 
 - `[MUST-KNOW]` Versioning Strategies & Trade-Off Space — URI path (`/v1/users`), Custom Header (`X-API-Version: 2`), Accept Header / Media Type (`application/vnd.myapi.v2+json`), Query Param (`/users?version=2`), Date-Based Versioning (Stripe-style `Stripe-Version: 2024-01-15` per-request transformation layer), and Additive-Only / No-Versioning strategies
 - `[MUST-KNOW]` Categorizing Change Boundaries — Breaking (field removal, type mutation, semantic shifts, error code changes) vs Non-Breaking (optional fields, new endpoints) vs Gray-Area (adding required request fields, changing defaults/validation)
@@ -203,48 +234,53 @@ _Project Repo: `production-service-core` (Stage 2: Production Hardening Release)
 - `[SHOULD-KNOW]` Versioning Failure Modes & Anti-Patterns — Version explosion, version freeze, silent breaking changes, ghost un-deletable versions, consumer lock-in, and over-versioning
 - `[EXPERT]` Spec, SDK & Tooling Integration — Multi-version OpenAPI/Swagger specs, `openapi-diff` breaking change detection in CI, API contract style guide enforcement (Spectral / Vacuum CLI linting for API naming & response envelope consistency), versioned client SDK generation, and per-version Pact contract testing
 
-### 0B.5b Deep HTTP Semantics & Protocol Controls
+🧪 **`[DRILL 0C]`**: Build a v1 $\rightarrow$ v2 migration in `production-service-core`. Implement expand-contract DB schema evolution, money rounding precision tests, `Deprecation`/`Sunset` headers, ETag validation (`If-Match`), and version usage tracking before returning a `410 Gone` after sunset.
+🔎 **`[DISSECTION 0C]`**: Inspect PostgreSQL query logs (`pg_stat_activity` & lock graph) during competing pessimistic `SELECT FOR UPDATE` transaction locks.
 
-- `[MUST-KNOW]` Status Code Taxonomy & Discipline — 400 Bad Request vs 422 Unprocessable Entity vs 409 Conflict vs 412 Precondition Failed, 401 Unauthorized vs 403 Forbidden, 402 Payment Required, 405 Method Not Allowed
-- `[MUST-KNOW]` HTTP Layer Optimistic Concurrency & Conditional Requests — `If-Match`, `If-None-Match`, `If-Unmodified-Since`, `If-Modified-Since`, ETag validation
-- `[SHOULD-KNOW]` Range Requests & Large Media Streams — `Range`, `Content-Range`, `206 Partial Content` (video streaming, large chunk downloads)
-- `[MUST-KNOW]` Redirect Semantics & Method Preservation — 301 Moved Permanently vs 302 Found vs 307 Temporary Redirect vs 308 Permanent Redirect (method preservation rules)
-- `[MUST-KNOW]` Response Location & Retry Headers — `201 Created` with `Location` header, `429 Too Many Requests` / `503 Service Unavailable` with `Retry-After` headers
-- `[MUST-KNOW]` Protocol Methods & Content Negotiation — `OPTIONS`, `HEAD`, `TRACE`, `Accept`, `q=` weights, `Vary` headers
+---
 
-### 0B.6 Enterprise Testing Strategy & Production Profiling
+## Level 0D — Enterprise Testing, Networking & Operations
+
+_Project Repo: `production-service-core` (Stage 4: Complete Production-Hardened Release)_
+
+> 📦 **Level 0D Build Scope & Deliverables**:
+> - **Deliverable**: `production-service-core` **Stage 4 (Hardened Release)** fully containerized in Docker with an automated test suite.
+> - **Core Engineering**: Test Pyramid implementation (Unit, Integration, Contract/E2E), Testcontainers (ephemeral Postgres & Redis in Docker), MSW/Nock mock servers, factory fixture builders, low-level networking (TCP/UDP, TLS 1.3 handshakes, DNS resolution, HTTP/1.1 vs HTTP/2 vs HTTP/3 QUIC), Node.js memory leak profiling (`clinic.js`, `--inspect`, heap snapshots), container limits (OOMKilled, cgroups, file descriptors), K8s preStop hooks & graceful shutdown signal handling, distributed cron scheduling (DST edge cases, Redlock leases), Husky + lint-staged pre-commit automation, OpenAPI DX stack, and production multi-stage Dockerfile.
+> - ❌ **Scope Boundaries**: *Single service repo hardening complete — microservice gateways and event streams deferred to Level 3A & 4.*
+
+### 0D.1 Networking & Protocol Foundations [EXPLANATION-HEAVY]
+
+- `[MUST-KNOW]` Transport Layer Protocols (TCP vs UDP) — TCP 3-way handshake (`SYN`, `SYN-ACK`, `ACK`), connection teardown (`FIN`/`RST`), TCP windowing & socket backpressure, socket exhaustion handling (`ulimit -n`), TCP keep-alive, vs UDP trade-offs in DNS lookups & real-time streams
+- `[SHOULD-KNOW]` TLS/SSL Cryptographic Security & Certificate Lifecycle — TLS 1.2 vs 1.3 handshake mechanics (0-RTT/1-RTT latency impact), cipher suites, SNI, ALPN protocol negotiation, mTLS (mutual TLS), wildcard vs SAN certificates, automated ACME / Let's Encrypt issuance & renewal
+- `[MUST-KNOW]` DNS Infrastructure & Resolution Pipeline — Record types (`A`, `AAAA`, `CNAME`, `MX`, `TXT`, `NS`), recursive vs authoritative resolution flow, DNS caching & TTL propagation delays, split-horizon DNS, negative DNS caching behavior
+- `[MUST-KNOW]` HTTP Protocol Evolution (HTTP/1.1 vs HTTP/2 vs HTTP/3) — HTTP/1.1 (head-of-line blocking, Keep-Alive connection pools) vs HTTP/2 (binary framing layer, stream multiplexing over single TCP connection, HPACK header compression) vs HTTP/3 (QUIC protocol over UDP, 0-RTT connection establishment, IP migration resilience)
+
+### 0D.2 Enterprise Testing Strategy & Infrastructure
 
 - `[MUST-KNOW]` The Backend Test Pyramid — unit tests (pure domain logic), integration tests (API endpoints against DB), and contract/e2e tests
 - `[MUST-KNOW]` Real Infrastructure Testing with Testcontainers — spinning up ephemeral, isolated PostgreSQL and Redis Docker containers programmatically for integration test execution (zero DB mocking)
 - `[MUST-KNOW]` Mocking & Stubbing Third-Party APIs — MSW (Mock Service Worker) and Nock for intercepting outbound HTTP calls to third-party providers (Resend, Twilio, Stripe) in automated test runs
 - `[MUST-KNOW]` Test Fixtures & Factories — deterministic test data generation using `@faker-js/faker` and factory builders
+
+### 0D.3 Production Profiling, Resource Limits & Operating Environment
+
 - `[SHOULD-KNOW]` Memory Leak Profiling & Heap Snapshots — Node.js `--inspect` memory profiling, heap snapshots (`v8.getHeapSnapshot()`), inspecting uncollected event listeners and unclosed database connection handles under load via `clinic.js` (Doctor & Bubbleprof)
-- `[SHOULD-KNOW · Revisit in Level 4]` Resource Limits & OS-Level Constraints — Node.js V8 heap limits (`--max-old-space-size`), file descriptor limits (`ulimit -n`, socket exhaustion handling), CPU cgroup throttling in K8s/Docker containers, container RAM limits & container OOMKilled diagnosis (`--memory`), disk I/O & egress network bandwidth throttling, and end-to-end backpressure propagation (TCP window $\rightarrow$ socket buffer $\rightarrow$ app queue $\rightarrow$ client)
-- `[MUST-KNOW]` Health check endpoints (liveness vs readiness)
+- `[SHOULD-KNOW · Revisit in Level 4]` Resource Limits & OS-Level Constraints — Node.js V8 heap limits (`--max-old-space-size`), file descriptor limits (`ulimit -n`, socket exhaustion handling), CPU cgroup throttling in K8s/Docker containers, container RAM limits & container OOMKilled diagnosis (`--memory`), disk I/O & egress network bandwidth throttling, and end-to-end backpressure propagation (TCP window $\rightarrow$ socket buffer $\rightarrow$ app queue $\rightarrow$ client) `[Revisited in Level 4 when running K8s pods with real cgroup memory limits, CPU quotas, and OOMKilled pod troubleshooting]`
+- `[MUST-KNOW]` Health check endpoints (liveness vs readiness probes)
 - `[MUST-KNOW]` Graceful Shutdown & Connection Draining Lifecycle — `SIGTERM`/`SIGINT` signal traps, draining in-flight HTTP requests, closing DB connection pools, Kubernetes `preStop` lifecycle hooks (delaying SIGTERM until K8s endpoints list updates), and draining long-lived persistent connections (WebSocket client reconnect frame broadcasting & gRPC stream `GOAWAY` frames)
 - `[MUST-KNOW]` Strict TypeScript, lint/format, pre-commit hooks (Husky + lint-staged)
 - `[SHOULD-KNOW]` Background task offloading (event emitters/`setImmediate` for non-blocking side-effects)
+- `[SHOULD-KNOW]` Distributed Cron & Scheduled Task Semantics — Cron vs Interval vs One-shot timer semantics, timezone-aware scheduling ("9am in user's local timezone"), Daylight Saving Time (DST) scheduling pitfalls (handling skipped vs repeated hours during clock transitions), job overlap prevention (skip-if-running concurrency controls, Redlock distributed leases), and job execution observability (last run timestamp, next run schedule, execution duration percentiles, failure rate tracking)
+
+### 0D.4 OpenAPI Tooling, DX Stack & Dockerization
+
 - `[SHOULD-KNOW]` OpenAPI/Swagger Auto-Generated Docs & Developer Experience (DX) Stack — OpenAPI-first development (spec-driven code generation), API contract style guide enforcement (Spectral / Vacuum linting rules in CI), SDK generation (multi-language client SDKs via OpenAPI Generator / Orval), interactive API documentation UI (Scalar, Redoc, Stoplight), API versioning & changelog automation (spec diffing via `openapi-diff`), and automated team Postman / Bruno collection export pipelines
 - `[EXPERT]` Developer Portals & Interactive API Playgrounds — Self-service developer onboarding, self-service API key provisioning & usage quota dashboards, interactive API playgrounds (live request execution in docs with environment switching), automated consumer API changelog & deprecation notification pipelines (email/Slack webhooks), and dedicated consumer Sandbox/Test environments isolated from production data
 - `[MUST-KNOW]` Docker Compose local dev environment + production multi-stage Dockerfile
 
-### 0B.7 Third-Party Integration & Enterprise Idempotency System [EXPLANATION-HEAVY]
+🧪 **`[DRILL 0D]`**: Write integration tests using Testcontainers (ephemeral PostgreSQL & Redis) and MSW for external API mocks. Implement a `SIGTERM` graceful shutdown handler with K8s `preStop` delay and zero-downtime connection draining.
+🔎 **`[DISSECTION 0D]`**: Run `clinic.js` against a simulated memory-leaking route under load; analyze the heap profile flamegraph to isolate the uncollected closure.
 
-- `[SHOULD-KNOW · Revisit in Level 3A/4]` Retries, Circuit Breakers & Retry Budgeting Discipline — Exponential backoff with full jitter, Circuit breaker pattern (closed $\rightarrow$ open $\rightarrow$ half-open states), Retry Budgeting (capping total retry requests at max 10% of overall service traffic to prevent retry storms), Retry Amplification Prevention (preventing cascading retries across multi-tier call chains Client $\rightarrow$ Gateway $\rightarrow$ Service $\rightarrow$ DB), Strict Idempotency Requirements for retry safety `[See Also: 0B.7 Idempotency Keys]`, and Hedged Requests (firing parallel backup requests after p99 latency threshold to cut tail latency)
-- `[MUST-KNOW]` Webhook signature verification (HMAC)
-- `[MUST-KNOW]` HTTP Idempotency Key Architecture — Redis storage, lock-based deduplication, TTL management & storage cost vs safety trade-offs, payload caching & replay response semantics
-- `[MUST-KNOW]` DB-Write Idempotency & SQL Collision Handling — `ON CONFLICT DO NOTHING` vs `DO UPDATE`, `WHERE NOT EXISTS`, detecting idempotency key collision (same key with different payload error responses)
-- `[SHOULD-KNOW]` Read & Multi-Step Task Idempotency `[Prerequisite Teaser — Distributed Saga step compensation idempotency covered in full in Level 3A.3]` — Idempotency keys for expensive/side-effecting endpoints, multi-step workflow compensation idempotency, and replay-safe read operations
-- `[SHOULD-KNOW]` Distributed Cron & Scheduled Task Semantics — Cron vs Interval vs One-shot timer semantics, timezone-aware scheduling ("9am in user's local timezone"), Daylight Saving Time (DST) scheduling pitfalls (handling skipped vs repeated hours during clock transitions), job overlap prevention (skip-if-running concurrency controls, Redlock distributed leases), and job execution observability (last run timestamp, next run schedule, execution duration percentiles, failure rate tracking)
-
-### 0B.8 Data Correctness & Domain Fundamentals (Money & Unicode) [EXPLANATION-HEAVY]
-
-- `[MUST-KNOW]` Money, Currency & Numeric Precision Architecture — Why floating-point money causes production bugs (`0.1 + 0.2 !== 0.3`), integer minor units (cents) vs arbitrary-precision decimal libraries (`decimal.js`, `big.js`), PostgreSQL column selection (`NUMERIC` vs `MONEY` vs `BIGINT`), BigInt vs number overflow (IDs, timestamps, balances), currency ISO 4217 minor unit variations (JPY = 0 decimals, KWD = 3 decimals), rounding algorithms (banker's rounding, half-up, half-even), currency conversion pipelines (rate sources, historical rates, spread), and tax calculation precision (VAT/GST/US sales tax nexus rules)
-- `[MUST-KNOW]` Text Encoding, Unicode & Internationalization Security — UTF-8 vs UTF-16 vs ASCII internal byte representations, Unicode normalization (`NFC`, `NFD`, `NFKC`, `NFKD`) for email uniqueness & username collision prevention, Grapheme clusters (emoji, flag sequences, ZWJ family sequences, skin tone modifiers) where string length $\neq$ character count, string length vs byte length vs grapheme length for DB column sizing & truncation, case folding edge cases (Turkish dotless `ı`, German `ß`), URL encoding (`encodeURIComponent` vs `encodeURI`, `%20` vs `+`), CSV/JSON formula injection security (`=cmd|...`), and null-byte/control character input sanitization
-- `[MUST-KNOW]` Null Semantics, Optionality & SQL Three-Valued Logic — `null` vs `undefined` vs missing keys across JSON serialization, PostgreSQL, and TypeScript, SQL three-valued logic (`NULL = NULL` evaluates to `UNKNOWN`), optional & nullable field modeling across validation schemas (Zod `.optional()` vs `.nullable()`, Protobuf field presence vs Avro unions), and API design consistency rules (`empty array []` vs `null` vs `404` for empty collection responses)
-
-🧪 **`[DRILL 0B.8]`**: Build a v1 $\rightarrow$ v2 migration in `production-service-core`. Implement one breaking field rename, one non-breaking addition, `Deprecation`/`Sunset` response headers, and version usage tracking middleware before returning a `410 Gone` after sunset.
-🔎 **`[DISSECTION 0B]`**: Inspect `express-rate-limit` & `ioredis` scripts — read and explain atomic Lua script execution for sliding-window rate limiting in Redis.
 
 ---
 
@@ -260,25 +296,33 @@ _Project: URL Shortener Service_
 ### 1.1 API & Protocol Design [EXPLANATION-HEAVY]
 
 - `[MUST-KNOW]` REST resource modeling, idempotency, cursor vs offset pagination
-- `[MUST-KNOW]` Webhook Ingestion & Inbound Hook Reliability — Inbound HTTP webhook endpoints, HMAC-SHA256 signature verification, immediate 202 Accepted response decoupling, dead-letter queue (DLQ) routing, and replay protection
+- `[MUST-KNOW]` Webhook Ingestion & Inbound Hook Reliability — Inbound HTTP webhook endpoints, HMAC-SHA256 signature verification, immediate 202 Accepted response decoupling, dead-letter queue (DLQ) routing, and replay protection `[Note: Covers inbound webhooks we receive; outbound webhook delivery engines are covered in 3A.5]`
 - `[SHOULD-KNOW]` GraphQL Production Architecture — Resolvers, N+1 problem & DataLoader batching, GraphQL Federation / Schema Stitching, Schema Evolution & `@deprecated` Directives Lifecycle, Persisted Queries (automatic persisted queries / APQ for reduced payload size & query injection prevention), Gateway-Level Query Complexity & Cost Analysis (static query depth limits, dynamic field-cost calculation AST analysis, and pre-execution query cost rejection at the gateway), WebSocket-based Subscriptions, self-hosted Schema Registries (Hive / Apollo alternative), and Multi-Tiered GraphQL Caching Strategies (Gateway/Edge full response HTTP caching via `@cacheControl` directives vs Client-side normalized entity caching like Apollo Client / Urql)
 - `[SHOULD-KNOW]` High-Performance API Protocols & Serialization Tuning — HTTP/2 & HTTP/3 multiplexing & connection reuse in production, response compression trade-offs (Brotli vs gzip), JSON serialization optimization (`fast-json-stringify` vs `JSON.stringify`), and Protocol Buffers vs JSON serialization benchmarks
 - `[EXPERT]` Binary Wire-Format Serialization & Content Negotiation — JSON vs MessagePack vs CBOR wire-format tradeoffs (payload size compression, CPU parsing overhead, schema requirements, browser ecosystem support), HTTP header content negotiation for binary payloads (`Accept: application/x-msgpack` vs `Accept: application/cbor`), and quantitative decision thresholds for transitioning HTTP REST endpoints from JSON to binary serialization
 - `[SHOULD-KNOW]` WebSockets/SSE/gRPC Deep Dive — Protocol selection matrices, gRPC Protobuf Package Versioning (`myapi.v1` / `myapi.v2`) & Immutable Field Numbering Rules, gRPC Server Reflection (`grpc-reflection` for dynamic service discovery without `.proto` files), gRPC Health Checking Protocol (`grpc.health.v1.Health` standard for load balancing & Kubernetes probes), and `gRPC-Web` proxy compatibility layer for browser-to-backend RPC calls `[Cross-Reference: Scaling WebSockets to millions of connections comes in Level 3B]`
-- `[MUST-KNOW]` Node.js Streams & Multi-Core Clustering Performance `[Cross-Reference: Core Event Loop, Microtasks & V8 Engine mechanics covered in Level 0A.0]`
+
+### 1.1b Deep Node.js Engine & Runtime Internals `[EXPLANATION-HEAVY]`
+
+> 💡 **Explanation-Heavy Topic**: Node.js runtime mechanics (Libuv phase transitions, V8 memory & GC, stream backpressure) are examined here in full depth after mastering basic API building. AI instructors provide comprehensive explanations with execution flowcharts and step-by-step trace breakdowns.
+
+- `[MUST-KNOW]` Libuv Event Loop Architecture & Phases — Timers (`setTimeout`/`setInterval`) $\rightarrow$ Pending I/O Callbacks $\rightarrow$ Idle/Prepare $\rightarrow$ Poll (I/O execution & socket polling) $\rightarrow$ Check (`setImmediate`) $\rightarrow$ Close Callbacks, event loop starvation risks (recursive `nextTick` / microtask loops)
+- `[SHOULD-KNOW]` V8 Engine Memory Model & Garbage Collection — V8 Heap structure (New Space / Scavenger GC vs Old Space / Mark-Sweep-Compact GC), C++ Native Memory vs V8 Heap (`Buffer`/`ArrayBuffer`), V8 heap limits (`--max-old-space-size`), memory leak patterns (dangling closures, global event listeners)
+- `[MUST-KNOW]` Node.js Streams, Pipes & Backpressure Management — Readable, Writable, Transform, and Duplex stream pipelines, `highWaterMark` buffer thresholds, handling `drain` events, avoiding memory spikes during high-throughput I/O
+- `[SHOULD-KNOW]` Process Threads, Clustering & Worker Threads — Single-threaded main event loop vs libuv thread pool (`UV_THREADPOOL_SIZE` for crypto/fs/zlib) vs `worker_threads` (CPU-bound offloading) vs OS-level cluster process fork (`cluster` module)
 
 ---
 
-### 1.2 Relational Data Modeling & Indexing Strategy [EXPLANATION-HEAVY]
+### 1.2 Relational & Document Data Modeling [EXPLANATION-HEAVY]
 
 - `[MUST-KNOW]` Domain Data Modeling Discipline — normalization (1NF to 3NF) vs tactical denormalization, entity-relationship design, aggregate boundaries
-- `[MUST-KNOW]` Index types: single, composite (leftmost-prefix rule), partial, expression/functional
-- `[MUST-KNOW]` Covering indexes / index-only scans
-- `[SHOULD-KNOW]` JSONB querying + GIN indexes
-- `[MUST-KNOW]` Reading `EXPLAIN ANALYZE` — Seq Scan vs Index Scan vs Bitmap Heap Scan, spotting disk-based sorts
+- `[MUST-KNOW]` Embedding vs referencing in MongoDB, avoiding unbounded arrays, document schemas vs relational schemas
 
 ### 1.3 Advanced SQL & High-Performance Querying [EXPLANATION-HEAVY]
 
+- `[MUST-KNOW]` Index types: single, composite (leftmost-prefix rule), partial, expression/functional, JSONB GIN indexes
+- `[MUST-KNOW]` Covering indexes / index-only scans
+- `[MUST-KNOW]` Reading `EXPLAIN ANALYZE` — Seq Scan vs Index Scan vs Bitmap Heap Scan, spotting disk-based sorts
 - `[MUST-KNOW]` N+1 detection & resolution (eager loading, batching, production detection via Datadog APM, Prisma query logs, `pg_stat_statements`)
 - `[MUST-KNOW]` Slow query log analysis (`auto_explain` module, `pg_stat_statements` top query analysis)
 - `[SHOULD-KNOW]` Query plan regression detection (CI plan diffing, index scan vs seq scan assertion gates)
@@ -291,11 +335,10 @@ _Project: URL Shortener Service_
 - `[MUST-KNOW]` Keeping transactions short — never hold a DB lock across a network call
 - `[MUST-KNOW]` Time & Date Handling in Distributed Systems — UTC storage everywhere vs local timezone rendering, Daylight Saving Time (DST) edge cases in scheduling/billing, Leap seconds real-world impact, IANA `tzdata` database updates & dependency management
 
-### 1.4 Efficient MongoDB Querying
+### 1.4 Efficient MongoDB Querying & Aggregations
 
-- `[MUST-KNOW]` Embedding vs referencing, avoiding unbounded arrays
 - `[MUST-KNOW]` Aggregation pipeline (`$match/$group/$lookup/$facet`) instead of app-side joins
-- `[MUST-KNOW]` Index types (compound, multikey, text, sparse), reading `.explain()`
+- `[MUST-KNOW]` Compound, multikey, text, and sparse indexes in MongoDB, reading `.explain()`
 
 ### 1.5 Caching — Your First System Design Concepts [EXPLANATION-HEAVY]
 
@@ -330,39 +373,36 @@ _Project: URL Shortener Service_
 _Project: Product Catalog / Search Service_
 
 > 📦 **Level 2 Build Scope & Deliverables**:
-> - **Deliverable**: Express/TypeScript **Product Catalog Microservice** running locally in Docker.
+> - **Deliverable**: Express/TypeScript **Product Catalog & Search Engine** with dual REST + GraphQL API query interface.
 > - **Core Components**: PostgreSQL (relational product inventory & pricing) + Elasticsearch or Meilisearch (full-text product search & faceted filters).
 > - **Sync Pipeline**: Asynchronous CDC / Dual-Write event pipeline syncing product updates from Postgres to the Search Engine.
-> - **Endpoints**: `GET /products/search?q=...&category=...` (full-text search + faceted filtering) and `POST /products` (creates product in Postgres + syncs to search).
-> - **Verification**: Benchmark `EXPLAIN ANALYZE` on Postgres indexed queries vs Search engine latency under 100k seeded product rows.
+> - **Endpoints / Queries**: REST `GET /products/search` + GraphQL `query { searchProducts(...) { id title category price { amount currency } } }` (with DataLoader batching to prevent N+1 query execution on category resolvers) and `POST /products` (creates product in Postgres + syncs to search).
+> - **Verification**: Benchmark `EXPLAIN ANALYZE` on Postgres indexed queries vs Elasticsearch search engine latency under 100k seeded product rows.
 
-### 2.1 RDBMS Internals [EXPLANATION-HEAVY]
+### 2.1 RDBMS Internals & Storage Engines [EXPLANATION-HEAVY]
 
 - `[MUST-KNOW]` ACID + WAL (write-ahead log) crash recovery
 - `[MUST-KNOW]` MVCC and tuple visibility
 - `[SHOULD-KNOW]` Vacuuming, HOT updates, visibility maps, checkpointing
-- `[MUST-KNOW]` Isolation levels revisited at the engine level
 
-### 2.2 NoSQL Landscape [EXPLANATION-HEAVY]
+### 2.2 NoSQL & Specialized Data Stores [EXPLANATION-HEAVY]
 
 - `[MUST-KNOW]` Document stores (MongoDB), Key-Value (Redis/DynamoDB), Wide-column (Cassandra/ScyllaDB — partition/clustering keys, tunable consistency $R+W>N$ `[Prerequisite Teaser — Quorum math & CAP/PACELC trade-offs formalized in Level 3A.4]`), Graph (Neo4j)
 - `[EXPERT]` Time-Series DBs & Columnar OLAP Query Patterns (TimescaleDB/ClickHouse) — hypertable partitioning, columnar memory layout, vector aggregate functions, retention policies, and continuous aggregate materialized views
 
----
+### 2.3 Search Systems & Inverted Indexes [EXPLANATION-HEAVY]
 
-### 2.3 Object Storage & CDN [EXPLANATION-HEAVY]
+- `[MUST-KNOW]` Inverted index mechanics, TF-IDF, BM25 scoring
+- `[MUST-KNOW]` Elasticsearch/OpenSearch cluster architecture: shards, replicas, near-real-time indexing
+- `[MUST-KNOW]` Fuzzy search, autocomplete (n-grams), faceted search
+
+### 2.4 Unstructured Storage: Object Storage & CDN Architecture [EXPLANATION-HEAVY]
 
 - `[MUST-KNOW]` Enterprise File Upload Architecture — Direct-to-Cloud Presigned URLs (bypassing backend server memory bottlenecks), Multipart Chunked Uploads for large files (parallel chunk ingestion + S3 ETag assembly), single & batch/bulk file processing (`busboy` / `multer` memory vs disk streaming), and file MIME validation / antivirus virus scan gates
 - `[MUST-KNOW]` File Metadata Database Lifecycle — Storing file metadata records (UUID, S3 Key, ETag, bucket, size, checksum) in PostgreSQL before/after cloud upload completion, atomic database status state machines (`PENDING_UPLOAD → UPLOADED → FAILED`), and orphan file garbage collection cron jobs
 - `[MUST-KNOW]` Storage Driver & Adapter Pattern — Building a swappable Object Storage interface (AWS S3 vs MinIO vs Google Cloud Storage vs Local Disk)
 - `[MUST-KNOW]` S3/MinIO internals: presigned URLs, multipart upload, versioning
 - `[MUST-KNOW]` CDN internals & Edge Caching — edge POP selection, cache-key normalization, origin shielding, `Surrogate-Control` & CDN revalidation via HTTP conditional GETs `[See Also: 1.5 HTTP Caching]`
-
-### 2.4 Search Systems [EXPLANATION-HEAVY]
-
-- `[MUST-KNOW]` Inverted index mechanics, TF-IDF, BM25 scoring
-- `[MUST-KNOW]` Elasticsearch/OpenSearch cluster architecture: shards, replicas, near-real-time indexing
-- `[MUST-KNOW]` Fuzzy search, autocomplete (n-grams), faceted search
 
 📊 **`[DRILL 2]`**: Compare `Seq Scan` cost on the catalog table before/after adding the right index; show the plan diff.
 🔎 **`[DISSECTION 2]`**: Inspect MinIO S3 server source (`cmd/multipart-handlers.go`) — explain how multipart chunk ingestion, ETags verification, and block assembly are implemented.
@@ -385,9 +425,9 @@ _Project: Order Processing Service_
 - `[MUST-KNOW]` Load balancing algorithms: round robin, least connections, consistent hashing (full mathematical depth, virtual nodes, ring partitioning), power-of-two-choices
 - `[MUST-KNOW]` Stateless backend design (JWT vs sticky sessions vs shared Redis state)
 
-### 3A.2 Database Scaling [EXPLANATION-HEAVY]
+### 3A.2 Database Scaling & Sharding [EXPLANATION-HEAVY]
 
-- `[MUST-KNOW]` Replication: single-leader, multi-leader, leaderless/quorum
+- `[MUST-KNOW]` Replication: single-leader, multi-leader, leaderless/quorum ($R+W>N$)
 - `[MUST-KNOW]` Sharding: range-based, hash-based (consistent hashing `[See Also: 3A.1]`), directory-based
 - `[SHOULD-KNOW]` Zero-downtime resharding concepts
 - `[SHOULD-KNOW]` Multi-Tenant System Architecture — Tenant onboarding & automated workspace provisioning, isolation guarantees, per-tenant rate limits & quotas (tiered plans), per-tenant observability (dashboards & alerting), tenant data export & deletion (GDPR compliance), and tenant migration across DB shards/cells
@@ -479,7 +519,7 @@ _Project: Unified Production Platform (wiring Projects 1–3 together under ente
 > 📦 **Level 4 Build Scope & Scope Boundaries**:
 > - **MVP (Minimum Viable Version - Required to complete Level 4)**:
 >   - **Gateway & Auth Tier**: Envoy or Express Gateway with JWT validation & Redis distributed rate limiting.
->   - **Service Integration**: Wire Production Service Core (Level 0B) + Product Catalog (Level 2) + Order Processing Engine (Level 3A) together behind Gateway.
+>   - **Service Integration**: Wire Production Service Core (Level 0B + 0C + 0D) + Product Catalog (Level 2) + Order Processing Engine (Level 3A) together behind Gateway.
 >   - **Observability Tier**: Prometheus metrics + Grafana dashboard (p95/p99 latency, RPS, error rates) + OpenTelemetry trace propagation across services.
 >   - **CI/CD & Hardening**: Helm / Docker Compose deployment with an automated `k6` load-test script in CI and a written **Production Operations Runbook**.
 > - **Stretch Goals (Optional)**:
@@ -489,10 +529,10 @@ _Project: Unified Production Platform (wiring Projects 1–3 together under ente
 ### 4.1 Microservices & Gateway [EXPLANATION-HEAVY]
 
 - `[MUST-KNOW]` Domain-driven design basics (bounded contexts)
-- `[MUST-KNOW]` API Gateway Deep Dive & Multi-Gateway Architecture — Path-based, header-based, and weight-based routing, Multi-Gateway Topologies (External Edge Gateway for internet WAF/Auth vs Internal Mesh Gateway for microservice-to-microservice mTLS & rate limiting), Version routing at the gateway (`/v1/*` vs `/v2/*` path routing, header-based version routing `X-API-Version`), gateway auth context injection (JWT validation at gateway & forwarding user headers), config-driven vs code-driven rate limiting, gateway observability (per-route metrics & tracing), self-hosted options (Kong, Tyk, Traefik, APISIX, KrakenD), and Gateway Anti-Patterns (leaking domain business logic into gateway plugins, single-point-of-failure monolithic gateway bottlenecks, unnecessary double-hop latency penalties) `[See Also: Level 0B.5 API Versioning Engine]`
+- `[MUST-KNOW]` API Gateway Deep Dive & Multi-Gateway Architecture — Path-based, header-based, and weight-based routing, Multi-Gateway Topologies (External Edge Gateway for internet WAF/Auth vs Internal Mesh Gateway for microservice-to-microservice mTLS & rate limiting), Version routing at the gateway (`/v1/*` vs `/v2/*` path routing, header-based version routing `X-API-Version`), gateway auth context injection (JWT validation at gateway & forwarding user headers), config-driven vs code-driven rate limiting, gateway observability (per-route metrics & tracing), self-hosted options (Kong, Tyk, Traefik, APISIX, KrakenD), and Gateway Anti-Patterns (leaking domain business logic into gateway plugins, single-point-of-failure monolithic gateway bottlenecks, unnecessary double-hop latency penalties) `[See Also: Level 0C.5 API Versioning Engine]`
 - `[MUST-KNOW]` Traffic & Rate Control Taxonomy Matrix — Rate Limiting (requests per time window), Throttling (deliberately slowing down/delaying responses vs blocking), Quotas (total usage over extended billing cycles), Admission Control (limiting max concurrent in-flight requests), and Load Shedding (dropping low-priority traffic under CPU/RAM pressure)
 - `[SHOULD-KNOW]` Multi-Tenant Rate Limiting & Quota Management — Per-tenant tiered quotas (free/pro/enterprise), burst allowance token buckets, quota reset semantics (calendar month vs rolling 30 days), soft vs hard limits, and usage dashboard alerts
-- `[MUST-KNOW]` Multi-Tiered Rate Limiting Architecture — Edge Rate Limiting (Cloudflare WAF / AWS Shield DDoS protection) vs Gateway Rate Limiting (Envoy/Kong distributed token bucket) vs Application-Level Rate Limiting (Redis Express middleware) `[See Also: 0B.4 Security Mechanics]`
+- `[MUST-KNOW]` Multi-Tiered Rate Limiting Architecture — Edge Rate Limiting (Cloudflare WAF / AWS Shield DDoS protection) vs Gateway Rate Limiting (Envoy/Kong distributed token bucket) vs Application-Level Rate Limiting (Redis Express middleware) `[See Also: 0B.2 Security Essentials & Rate Limiting]`
 
 > 📌 **Diagram: Request path through three rate-limiting tiers**
 ```
@@ -512,7 +552,7 @@ Client Request ───▶ [Edge: Cloudflare WAF] ───▶ [Gateway: Envoy 
 ### 4.1c Advanced Gateway Edge Networking & Infrastructure Controls
 
 - `[MUST-KNOW]` Load Balancer Health Check Mechanics & Threshold Tuning — Active (synthetic ping probes) vs Passive (in-line error rate detection) health checking, flap dampening, rise/fall failure threshold tuning, and grace period configuration
-- `[MUST-KNOW]` Network Address Translation (NAT), Proxies & Header Propagation — Reverse proxy NAT traversal, trusted proxy configuration discipline, and handling client IP context headers (`X-Forwarded-For`, `X-Real-IP`, RFC 7239 `Forwarded` headers) `[Cross-Reference: Core TCP, TLS, DNS & HTTP/1–3 protocols established in Level 0B.4b]`
+- `[MUST-KNOW]` Network Address Translation (NAT), Proxies & Header Propagation — Reverse proxy NAT traversal, trusted proxy configuration discipline, and handling client IP context headers (`X-Forwarded-For`, `X-Real-IP`, RFC 7239 `Forwarded` headers) `[Cross-Reference: Core TCP, TLS, DNS & HTTP/1–3 protocols established in Level 0D.1]`
 
 ### 4.2 Observability, Log Shipping & SRE On-Call Operations [EXPLANATION-HEAVY]
 
@@ -544,7 +584,7 @@ Client Request ───▶ [Edge: Cloudflare WAF] ───▶ [Gateway: Envoy 
 - `[MUST-KNOW]` Infrastructure-as-Code (IaC) with Terraform / OpenTofu — declarative state management, state locking, modular infrastructure provisioning, drift detection, and automated K8s cluster / cloud resource deployment via CI/CD pipelines
 - `[MUST-KNOW]` Kubernetes essentials: pods, deployments, services, ingress, HPA
 - `[MUST-KNOW]` CI/CD, GitOps & Production Deployment Sequencing — Declarative GitOps workflows (ArgoCD/Flux), zero-downtime deployment sequencing (running DB schema migrations via K8s InitContainers/Helm pre-install hooks BEFORE app pod rollouts), Expand-Contract migration step orchestration, and health-check gate verification
-- `[MUST-KNOW]` Feature Flags & Progressive Delivery Engineering — Release vs ops vs experiment flags, server-side vs edge evaluation (OpenFeature SDK / Unleash), user segment targeting rules, percentage rollouts, API Version Rollouts as Progressive Delivery (canary v2 rollout to 1% → 10% → 100% of traffic), flag debt cleanup, and per-tenant kill switches `[See Also: Level 0B.5 API Versioning Engine]`
+- `[MUST-KNOW]` Feature Flags & Progressive Delivery Engineering — Release vs ops vs experiment flags, server-side vs edge evaluation (OpenFeature SDK / Unleash), user segment targeting rules, percentage rollouts, API Version Rollouts as Progressive Delivery (canary v2 rollout to 1% → 10% → 100% of traffic), flag debt cleanup, and per-tenant kill switches `[See Also: Level 0C.5 API Versioning Engine]`
 - `[SHOULD-KNOW]` Consumer-Driven Contract Testing (Pact) — schema evolution validation & non-breaking API contract enforcement across microservice boundaries in CI/CD pipelines
 - `[MUST-KNOW]` Automated Performance Regression Testing in CI — automated k6/Autocannon load testing scripts executing as quality gates to fail PR builds on p99 latency regressions
 - `[SHOULD-KNOW]` Automated Chaos & Resilience Gates in Staging — fault injection testing (pod kills, latency injection via Pumba/Chaos Mesh) integrated into deployment pipelines before production cutover
@@ -557,7 +597,7 @@ Client Request ───▶ [Edge: Cloudflare WAF] ───▶ [Gateway: Envoy 
 
 - `[SHOULD-KNOW]` Production Canary Testing & Probes — Automated smoke tests against canary instances, synthetic endpoint monitoring probes (Grafana Synthetic / Checkly), dark launches (routing production traffic to new code paths without user impact), shadow traffic duplication (mirroring live production requests to new versions), and controlled production chaos testing (isolated blast radius & kill switches)
 
-🏛️ **`[DEFENSE 4]`**: You present your Unified Production Platform architecture (wiring Production Service Core 0B + Product Catalog 2 + Order Processing 3A, with optional Real-Time Chat 3B stretch goal, behind Envoy Gateway with OpenTelemetry, K8s, and Canary rollouts). The AI conducts a formal 30-minute Staff Architect Mock Interview, grilling your design on: 10x/100x traffic spikes, multi-region failover, gateway throughput bottlenecks, database connection pool exhaustion, and cascading failure isolation.
+🏛️ **`[DEFENSE 4]`**: You present your Unified Production Platform architecture (wiring Production Service Core 0B + 0C + 0D + Product Catalog 2 + Order Processing 3A, with optional Real-Time Chat 3B stretch goal, behind Envoy Gateway with OpenTelemetry, K8s, and Canary rollouts). The AI conducts a formal 30-minute Staff Architect Mock Interview, grilling your design on: 10x/100x traffic spikes, multi-region failover, gateway throughput bottlenecks, database connection pool exhaustion, and cascading failure isolation.
 🔎 **`[DISSECTION 4]`**: Inspect Envoy Proxy's rate-limiting filter definitions (`ratelimit.proto` & Envoy rate-limit service) — explain gRPC interface design for high-throughput edge filters.
 
 ---
@@ -589,7 +629,7 @@ _Design-depth walkthroughs executed like a senior FAANG staff architect. **Level
 
 #### 5.1 URL Shortener at 100M DAU Scale
 
-- **5.1.1 Requirements & Capacity**: 100M active users, 10:1 read-to-write ratio, 1B short links created/mo, storage & cache sizing for 500M QPS peak.
+- **5.1.1 Requirements & Capacity**: 100M daily active users (DAU), 10:1 read-to-write ratio, 100M write requests/day (~1,200 write QPS avg, ~2,500 write QPS peak), 1B read requests/day (~11,500 read QPS avg, ~25,000–50,000 read QPS peak; load-test capacity design for 100,000 QPS peak).
 - **5.1.2 HLD & Component Flow**: Edge CDN → API Gateway → Shortening Service → Redis L2 Cache → Base62 Key Generator → Distributed NoSQL (Cassandra/DynamoDB).
 - **5.1.3 Deep-Dive Topics**: Pre-generated unique ID key generation service (KGS) vs on-the-fly hash collision handling; Base62 encoding strategy; LRU Redis caching for hot links (top 20%).
 - **5.1.4 Trade-offs & Failure Modes**: Base62 vs UUID vs auto-increment; KGS single point of failure mitigation; cache stampede on viral short URLs.
@@ -605,7 +645,7 @@ _Design-depth walkthroughs executed like a senior FAANG staff architect. **Level
 
 #### 5.3 Real-Time Chat & Presence Platform (WhatsApp / Discord Style)
 
-- **5.3.1 Requirements & Capacity**: 50M concurrent WebSocket connections, 2B messages/day, sub-100ms message delivery, online/offline presence tracking.
+- **5.3.1 Requirements & Capacity**: 50M total concurrent WebSocket connections across the cluster fleet (~100k–500k active connections per gateway node across a 100–500 node fleet), 2B messages/day, sub-100ms message delivery, online/offline presence tracking.
 - **5.3.2 HLD & Component Flow**: Client → Gateway Cluster (WebSocket/gRPC) → Connection Manager → Presence Service (Redis Bitmaps/Hashes) → Message Routing Engine → Kafka Event Bus → Distributed Storage (ScyllaDB / Cassandra).
 - **5.3.3 Deep-Dive Topics**: Connection state holding & heartbeat protocols; Channel/Group message fan-out strategies; Sequence numbering for message ordering; Push notification fallback for offline users.
 - **5.3.4 Trade-offs & Failure Modes**: WebSocket connection density per node (C10M problem); Group chat fan-out amplification (100k member group write amplifications); Disconnected client re-syncing without gaps.
@@ -629,7 +669,7 @@ _Design-depth walkthroughs executed like a senior FAANG staff architect. **Level
 
 #### 5.6 Scalable News Feed & Social Timeline (Twitter / Instagram Style)
 
-- **5.6.1 Requirements & Capacity**: 300M DAU, 50k tweets/posts per second, timeline generation latency < 200ms.
+- **5.6.1 Requirements & Capacity**: 300M daily active users (DAU), 500M posts/day (~6,000 tweets/sec average write QPS, ~50,000–150,000 tweets/sec peak write QPS during breaking events), 12B timeline reads/day (~140,000 avg read QPS, ~300,000 peak read QPS), timeline generation latency < 200ms p99.
 - **5.6.2 HLD & Component Flow**: User App → Post Ingestion Service → Fanout Worker Pool → Redis Timeline Cache → Storage Cluster → News Feed Query API.
 - **5.6.3 Deep-Dive Topics**: Fanout-on-Write (Push model for regular users) vs Fanout-on-Read (Pull model for celebrity/hot accounts with millions of followers); Hybrid fanout architecture; Timeline pagination mechanics.
 - **5.6.4 Trade-offs & Failure Modes**: Memory consumption of timeline Redis caches vs DB query overhead; Celebrity post spikes ("Justin Bieber effect"); Cache eviction of inactive user feeds.
@@ -770,8 +810,8 @@ _Mapped directly to roadmap levels for active reinforcement during topics. Each 
 
 - **Discord's migration from Cassandra to ScyllaDB** `[Reinforces Level 2.2 NoSQL & Level 3A.2 Database Scaling]`
 - **Instagram's Postgres sharding strategy** `[Reinforces Level 1.2 SQL & Level 3A.2 Database Scaling]`
-- **Stripe's ledger and idempotency-key architecture** `[Reinforces Level 0B.7 Idempotency & Level 5.5 Ledger]`
-- **Stripe's date-based API versioning and per-request transformation layer** `[Reinforces Level 0B.5 API Versioning Engine & Level 4.1 Gateway Routing]`
+- **Stripe's ledger and idempotency-key architecture** `[Reinforces Level 0B.3 Idempotency & Level 5.5 Ledger]`
+- **Stripe's date-based API versioning and per-request transformation layer** `[Reinforces Level 0C.5 API Versioning Engine & Level 4.1 Gateway Routing]`
 - **Uber's H3 geospatial indexing and dispatch system evolution** `[Reinforces Level 3B.2 Real-Time Spatial & Level 5.4 Uber]`
 - **Netflix's chaos engineering culture & multi-region setup** `[Reinforces Level 4.2 SRE & Level 6.2 Active-Active]`
 - **Airbnb's service mesh & migration to SOA** `[Reinforces Level 4.1 Microservices & Gateway]`
@@ -806,23 +846,12 @@ _Classic systems papers mapped directly to roadmap levels. Annotated with estima
 
 _Not part of the core path — pull from here only if/when you want to go a level deeper than high-level application backend engineering._
 
-- **OS process/thread model, virtual memory, paging, context switching** `[Cross-Reference: Level 0B.4 Async Execution & Level 1.1 Node Internals]`
+- **OS process/thread model, virtual memory, paging, context switching** `[Cross-Reference: Level 0A.6 Structured Concurrency & Level 1.1b Node Internals]`
 - **Filesystem internals (inodes, journaling, `fsync`, `mmap`)** `[Cross-Reference: Level 1.5 Storage Mechanics & Level 3A.3 Commit Logs]`
 - **Linux CPU scheduler (CFS), memory allocators (`jemalloc`/`tcmalloc`)** `[Cross-Reference: Level 6.1 Low Latency & Level 0A Engine Setup]`
 - **`io_uring`, kernel bypass (DPDK/eBPF) concepts** `[Cross-Reference: Level 6.1 Ultra-Low Latency Engineering]`
 - **NUMA, SIMD, cache-line/false-sharing awareness** `[Cross-Reference: Level 6.1 Lock-Free Ring Buffers]`
-- **V8 / Node.js GC internals, heap dumps & flame graph profiling** `[Cross-Reference: Level 1.1 Node Internals & Level 0B.6 Memory Leak Profiling]`
-
----
-
-## 🔄 Session Handoff State
-
-> Updated at the end of each session so we can resume cleanly.
-
-- **Last updated**: _(not started)_
-- **Last completed subtopic**: _(none)_
-- **Next starting point**: **Level 0A.0 — Node.js Engine & Runtime Internals**
-- **Open notes for next session**: _(none yet)_
+- **V8 / Node.js GC internals, heap dumps & flame graph profiling** `[Cross-Reference: Level 1.1b Node Internals & Level 0D.3 Memory Leak Profiling]`
 
 ### 🛠️ Living Error Journal (Bugs Encountered & Root-Caused)
 
